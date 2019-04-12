@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Video</title>
+</head>
+<body>
+<h1>视频上传</h1>
+<form action="/video/upload" enctype="multipart/form-data" method="post">
+    <input multiple name="uploadFile" type="file"/>
+    <button type="submit">上传</button>
+</form>
+<h1>视频列表</h1>
+<ul>
+    <li th:each="videoName:${videoNameList}">
+        <a th:href="${'/video/' + videoName}" th:text="${videoName}"></a>
+        <a th:href="${'/video/delete/' + videoName}">删除</a>
+    </li>
+</ul>
+</body>
+</html>
