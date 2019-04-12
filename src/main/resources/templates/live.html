@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>PC HLS Live Video</title>
+    <link href="/static/css/video-js-cdn.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<video autoplay class="video-js vjs-default-skin" controls height="600" id="hls-video" playsinline
+       preload="auto" webkit-playsinline width="1000" x-webkit-airplay="true" x5-video-player-fullscreen="true"
+       x5-video-player-typ="h5">
+    <!-- 直播的视频源 -->
+    <source src="http://192.168.43.216:8080/live/test.m3u8"
+            th:src="${'http://' + ip + ':' + port + '/live/' + roomName + '.m3u8'}" type="application/x-mpegURL">
+</video>
+
+<script src="/static/js/video.js"></script>
+<script src="/static/js/videojs-contrib-hls.js"></script>
+<script>
+    var player = videojs('hls-video');
+    player.play();
+</script>
+</body>
+
+</html>
