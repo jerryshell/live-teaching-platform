@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>PC HLS Live Video</title>
-    <link href="/static/css/video-js-cdn.min.css" rel="stylesheet">
+    <link href="/css/video-js-cdn.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,8 +19,8 @@
             th:src="${'http://' + ip + ':' + port + '/live/' + roomName + '.m3u8'}" type="application/x-mpegURL">
 </video>
 
-<script src="/static/js/video.js"></script>
-<script src="/static/js/videojs-contrib-hls.js"></script>
+<script src="/js/video.js"></script>
+<script src="/js/videojs-contrib-hls.js"></script>
 <script>
     var player = videojs('hls-video');
     player.play();
