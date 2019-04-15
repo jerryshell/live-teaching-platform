@@ -7,6 +7,8 @@
     <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
     <link href="css/zhibo.css" rel="stylesheet" th:href="@{/css/zhibo.css}">
+    <link href="css/user-left.css" rel="stylesheet" th:href="@{/css/user-left.css}">
+    <link href="css/user-right.css" rel="stylesheet" th:href="@{/css/user-right.css}">
 </head>
 <body>
 
@@ -50,20 +52,39 @@
 
 </div>
 <!--导航栏-->
-
-<div class="container ">
-    <div class="row infoVideo align-items-center">
-        <div>
-            <img alt="" src="img/1.jpg">
+<div class="container userPage">
+    <div class="row">
+        <div class="col-3" id="left-info">
+            <div class="left-info">
+                <div id="userIcon"><img src="img/1.jpg">
+                    <h3 id="user-name" th:text="${session.loginUserId}">用戶名</h3>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item-action active show" data-toggle="list" href="#message-content">
+                        今日直播
+                        <span class="badge badge-danger badge-pill ml-4">12</span>
+                    </a>
+                    <a class="list-group-item-action" data-toggle="list" href="#2-content">退出当前账号</a>
+                </div>
+            </div>
         </div>
-        <div class="borderLine"></div>
-        <div class="col-8 rightText ">
-            <div class="name"><strong>Div+CSS布局</strong></div>
-            <p>课程归类：<span class="class-category">网页制作</span></p>
-            <p>直播时间：<span>19:00-20:00</span></p>
-            <p>课程简介：<span>div 是一个块级元素。这意味着它的内容自动地开始一个新行。实际上，换行是 div 固有的唯一格式表现。可以通过 div 的 class 或 id 应用额外的样式。</span></p>
+        <div class="col-9" id="right-info">
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="message-content">
+                    <div class="container" id="myZhibo">
+                        <div class="row infoVideo align-items-center">
+                            <div class="col-6 rightText ">
+                                <div class="name"><strong>Div+CSS布局</strong></div>
+                                <p>课程归类：<span class="class-category">网页制作</span></p>
+                                <p>主讲人：<span>陈慧</span></p>
+                                <p>直播时间：<span>19:00-20:00</span></p>
+                            </div>
+                            <a class=" btn ml-auto " href="watching.html" id="inZhibo">进入直播室</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a class=" btn btn-danger " href="watching.html">进入直播室</a>
     </div>
 </div>
 </body>

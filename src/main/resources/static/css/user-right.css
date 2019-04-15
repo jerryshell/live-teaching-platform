@@ -81,11 +81,11 @@ select {
     color: rgb(255, 106, 32);
 }
 
-#inZhibo {
+.inZhibo {
     margin-right: 8%;
 }
 
-#myZhibo {
+.myZhibo {
     margin-bottom: 4%;
 }
 
