@@ -1,0 +1,64 @@
+body {
+    background-image: linear-gradient(to right, rgb(119, 129, 250), rgb(70, 177, 234));
+    margin-top: 150px !important;
+}
+
+.register-left {
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+}
+
+.register-left p {
+    padding: 20px 20px 0;
+}
+
+.register-left.btn-dark {
+    border-radius: 1.5rem;
+    border: none;
+    width: 120px;
+    background: #f8f8f8;
+    font-weight: 600;
+    color: #555;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.register-left.btn-dark:hover {
+    background: #000;
+}
+
+.register-right {
+    border: none;
+    background: #f8f8f8;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+    padding: 50px;
+}
+
+.register-right h4 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.register-form {
+    padding: 15px;
+}
+
+.register-right.btn-primary {
+    float: right;
+    border-radius: 1.5rem;
+    border: none;
+    width: 120px;
+    background: #f8f8f8;
+    font-weight: 600;
+    color: #555;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.register-right.btn-primary:hover {
+    background: #000;
+}
+

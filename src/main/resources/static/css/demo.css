@@ -1,0 +1,46 @@
+.infoVideo {
+    width: 60%;
+    height: 200px;
+    padding-left: 50px;
+    border-radius: 15px;
+    font-family: "microsoft yahei";
+    background-color: rgb(255, 255, 255);
+}
+
+.name {
+    font-size: 25px;
+    color: rgb(23, 162, 184);
+}
+
+.infoVideo img {
+    width: 124px;
+    height: 124px;
+    margin-bottom: 10px;
+    /*filter: grayscale(100%);*/
+}
+
+.borderLine {
+    margin-left: -30px;
+    width: 4px;
+    height: 180px;
+    background: #5bbbca;
+    border-radius: 2.5em;
+}
+
+.rightText {
+    margin-right: 20px;
+}
+
+.rightText p {
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.rightText p span {
+    font-family: "microsoft sans serif";
+}
+
+.class-category {
+    color: rgb(255, 106, 32);
+}
+

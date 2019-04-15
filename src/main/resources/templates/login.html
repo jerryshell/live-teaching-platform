@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="css/loginStyle.css" rel="stylesheet" th:href="@{/css/loginStyle.css}"/>
+    <title></title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset=md-1">
+            <div class="row">
+                <div class="col-md-5 register-left">
+                    <span><img src="img/logo.png" th:src="@{/img/logo.png}"/></span>
+                    <p>在线教学平台是一款基于obs直播推流的在线平台，主要用于教师以直播的方式与学生进行在线教与学，并提供在线互动，课后辅导等系列功能</p>
+                    <p>还未注册账号？</p>
+                    <a href="register-student.html" th:href="@{/register/student}">
+                        <button class="btn btn-dark btn-secondary " type="button">学生注册</button>
+                    </a>
+                    <a href="register-teacher.html" th:href="@{/register/teacher}">
+                        <button class="btn btn-dark btn-secondary " type="button">老师注册</button>
+                    </a>
+                </div>
+                <div class="col-md-7 register-right">
+                    <h4>用户登录</h4>
+                    <form class="register-form" method="post" th:action="@{/login}">
+                        <div class="form-group">
+                            <input class="form-control" name="id" placeholder="学号/工号" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="密码" type="password"/>
+                        </div>
+                        <div class="well well-sm" style="text-align:center;margin-bottom: 10px;">
+                            <input checked name="kind" type="radio" value="stu"> 学生
+                            <input name="kind" type="radio" value="tea"> 老师
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">登录</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

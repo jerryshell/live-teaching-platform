@@ -1,0 +1,56 @@
+.userPage {
+    font-family: "microsoft yahei";
+    margin-top: 0;
+    background: white;
+    color: #434343;
+    border-radius: 15px;
+}
+
+#left-info {
+    /*width: 80%;*/
+    font-size: 20px;
+    padding-left: 0;
+    padding-top: 2%;
+    border-right: 20px solid rgb(241, 241, 241);
+}
+
+#right-info {
+    /*margin-left: 2%;*/
+    font-size: 20px;
+    padding-left: 40px;
+    padding-top: 2.4%;
+}
+
+#left-info a {
+    padding-top: 3%;
+    height: 50px;
+    padding-left: 30%;
+    margin-bottom: 20px;
+}
+
+a.active {
+    color: white;
+    background: rgb(23, 162, 184);
+    border-bottom-right-radius: 16px;
+}
+
+#left-info a:hover {
+    color: white;
+    background: rgb(23, 162, 184);
+    border-bottom-right-radius: 16px;
+}
+
+#userIcon {
+    text-align: center;
+}
+
+#userIcon img {
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+}
+
+#user-name {
+    /*text-align: center;*/
+    margin: 20px 0;
+}

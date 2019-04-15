@@ -1,0 +1,165 @@
+.classes {
+    font-family: "microsoft yahei";
+}
+
+.header {
+    display: none;
+}
+
+.class-bottom {
+    margin: 10px 0;
+}
+
+.tetimonials {
+    padding: 40px 0;
+    padding-bottom: 0px;
+    background: #f1f1f1;
+    color: #434343;
+    text-align: center;
+    font-family: "microsoft yahei";
+}
+
+.classes h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0 15px 0;
+}
+
+.borderLine {
+    width: 2px;
+    height: 50px;
+    margin-right: 10px;
+    margin-top: -15px;
+    background: #5bbbca;
+}
+
+#time {
+    font-size: 16px;
+    margin: 15px 0;
+}
+
+.inner {
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.border {
+    width: 160px;
+    height: 5px;
+    background: rgb(23, 162, 184);
+    margin: 5px auto;
+    margin-bottom: 20px;
+}
+
+.testimonial {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 10%;
+    /*box-shadow: 0 0 1px rgba(73, 72, 62,0.1);*/
+}
+
+.testimonial img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.classes {
+    margin-bottom: 32px;
+}
+
+
+.classes img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px 0;
+}
+
+.classes p {
+    margin-bottom: 0;
+}
+
+#lesson-category {
+    width: 25%;
+    border: 1px solid rgb(255, 105, 32);
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 700;
+    color: rgb(255, 105, 32);
+}
+
+.testimonial:hover {
+    transform: scale(1.05);
+}
+
+.name {
+    font-size: 20px;
+    margin-bottom: 10px 0;
+}
+
+.smallTeacher {
+    margin-top: 40px;
+}
+
+.nav-teacher {
+    text-align: center;
+    font-size: 15px;
+    padding-right: 20px;
+    margin-top: -20px;
+    margin-bottom: 15px;
+}
+
+#category {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.categoryItem {
+    font-size: 20px;
+    font-family: "微软雅黑";
+    color: rgb(51, 51, 51);
+    padding: 5px 25px;
+}
+
+.category a {
+    text-decoration: none;
+}
+
+
+.active a {
+    color: white;
+    background: rgb(23, 162, 184);
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.categoryItem:hover {
+    color: white;
+    background: rgb(23, 162, 184);
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+#nav-subtile {
+    position: relative;
+    left: 4%;
+}
+
+#nav-subtile li {
+    margin-right: 15px;
+    margin-bottom: 20px;
+}
+
+#myTabContent.active {
+    margin-left: 0;
+}
+
+@media only screen and (min-width: 600px) {
+    .col {
+        flex: 100%;
+        max-width: 100%;
+    }
+}

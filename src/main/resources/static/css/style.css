@@ -1,0 +1,73 @@
+body {
+    background-color: rgb(241, 241, 241);
+}
+
+div {
+    display: block;
+}
+
+.rowT {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.colT {
+    flex: 25%;
+    max-width: 25%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#message {
+    /*margin-top: -10px;*/
+    margin-left: -15px;
+}
+
+
+}
+.carousel.banner.carousel-item {
+    height: 300px;
+}
+
+.carousel.banner.carousel-item img {
+    min-height: 300px;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.container.cards {
+    margin-top: 30px;
+}
+
+.row {
+    margin-top: 30px;
+}
+
+.subtitle {
+    font-family: "Microsoft YaHei";
+    text-align: center;
+}
+
+.more {
+    font-size: 14px;
+    margin-right: 12px;
+    float: right;
+}
+
+.user img {
+    width: 35px;
+    height: 35px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+
+.navs {
+    margin-top: 10px;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.nav-subtile {
+    text-align: center;
+}

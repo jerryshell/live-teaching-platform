@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="css/loginStyle.css" rel="stylesheet" th:href="@{/css/loginStyle.css}"/>
+    <title></title>
+    <style>
+        body {
+            background-image: linear-gradient(to left, rgb(119, 129, 250), rgb(70, 177, 234));
+            margin-top: 150px !important;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset=md-1">
+            <div class="row">
+                <div class="col-md-5 register-left">
+                    <span><img src="img/logo.png" th:src="@{/img/logo.png}"/></span>
+                    <p>在线教学平台是一款基于obs直播推流的在线平台，主要用于教师以直播的方式与学生进行在线教与学，并提供在线互动，课后辅导等系列功能</p>
+                    <p>已有账号？</p>
+                    <a href="login.html" th:href="@{/login}">
+                        <button class="btn btn-dark btn-secondary"
+                                type="button">返回登录
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-7 register-right">
+                    <h4>学生注册</h4>
+                    <form class="register-form" method="post" th:action="@{/register/student}">
+                        <div class="form-group">
+                            <input class="form-control" name="id" placeholder="学号" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="nickname" placeholder="昵称" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="email" placeholder="电子邮箱" type="email"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="密码" type="password"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="grade" placeholder="年级：2016" type="grade"/>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="majorId">
+                                <option value="1">软件工程</option>
+                                <option value="2">计算机科学与技术</option>
+                                <option value="3">人工智能</option>
+                                <option value="4">网络安全</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">注册</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
