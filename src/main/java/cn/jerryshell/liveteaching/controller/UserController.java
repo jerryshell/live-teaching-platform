@@ -13,4 +13,9 @@ public class UserController {
         String loginUserKind = (String) session.getAttribute("loginUserKind");
         return "user-" + loginUserKind;
     }
+
+    @GetMapping("/user/create-live")
+    public String toCreateLivePage() {
+        return "user-teacher-create-live";
+    }
 }
