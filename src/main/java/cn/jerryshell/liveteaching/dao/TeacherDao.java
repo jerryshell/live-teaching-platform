@@ -2,6 +2,8 @@ package cn.jerryshell.liveteaching.dao;
 
 import cn.jerryshell.liveteaching.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TeacherDao extends JpaRepository<String, Teacher> {
+@Repository
+public interface TeacherDao extends JpaRepository<Teacher, String> {
 }
