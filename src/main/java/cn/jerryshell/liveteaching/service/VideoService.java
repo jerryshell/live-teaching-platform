@@ -1,5 +1,7 @@
 package cn.jerryshell.liveteaching.service;
 
+import cn.jerryshell.liveteaching.config.UploadVideoConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,9 +13,11 @@ import java.util.List;
 @Service
 public class VideoService {
     private List<String> videoNameList = new LinkedList<>();
+    private UploadVideoConfig uploadVideoConfig;
 
-    public List<String> getVideoNameList() {
-        return videoNameList;
+    @Autowired
+    public void setUploadVideoConfig(UploadVideoConfig uploadVideoConfig) {
+        this.uploadVideoConfig = uploadVideoConfig;
     }
 
     public boolean uploadVideo(MultipartFile uploadFile, String filename) {
@@ -30,7 +34,7 @@ public class VideoService {
 
     public boolean deleteVideo(String videoName) {
         videoNameList.remove(videoName);
-        File file = new File("/home/jerry/Videos/" + videoName);
+        File file = new File(uploadVideoConfig.getFilepath() + videoName);
         return file.delete();
     }
 }

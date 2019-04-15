@@ -18,4 +18,9 @@ public class UserController {
     public String toCreateLivePage() {
         return "user-teacher-create-live";
     }
+
+    @GetMapping("/user/upload-video")
+    public String toUploadVideo() {
+        return "user-teacher-upload-video";
+    }
 }
