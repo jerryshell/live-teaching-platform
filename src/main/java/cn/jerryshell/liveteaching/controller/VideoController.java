@@ -28,10 +28,8 @@ public class VideoController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("upload-video.html");
-        modelAndView.addObject("videoNameList", videoService.getVideoNameList());
-        return modelAndView;
+    public String index() {
+        return "video-list";
     }
 
     @PostMapping("/upload")
