@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>首页</title>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
+    <link href="css/zhibo.css" rel="stylesheet" th:href="@{/css/zhibo.css}">
+</head>
+<body>
+
+<!--导航栏-->
+<div class="container menu navs">
+    <nav class="navbar  navbar-expand-sm navbar-fixed-top navbar-light ">
+        <a class="navbar-brand logoBlack" href="index.html" th:href="@{/}"><img src="img/logoBlack.png"></a>
+
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html" th:href="@{/}"><strong>首页</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="zhibo.html" th:href="@{/live}"><strong>直播教学</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="video.html" th:href="@{/video}"><strong>课程回放</strong></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input aria-label="Search" class="form-control mr-sm-2" placeholder="输入文字..." type="search">
+            <button class="btn btn-outline-info my-2 my-sm-0 " type="submit">搜索</button>
+        </form>
+        <ul class="nav navbar-nav ml-auto user">
+            <li class="nav-item">
+						<span class="userImg">
+							<a href="user.html" th:href="@{/user}"><img src="img/1.jpg"></a>
+							<a class="badge badge-danger badge-pill " href="user.html" id="message" th:href="@{/user}">12</a>
+						</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="user.html" th:href="@{/user}">
+                    <strong th:text="${session.loginUserId}">用户名</strong>
+                </a>
+            </li>
+            <li class="nav-item">
+                <strong class="nav-link" th:text="${session.loginUserKind}=='stu'?'学生':'老师'">学生端</strong>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<!--导航栏-->
+
+<div class="container ">
+    <div class="row infoVideo align-items-center">
+        <div>
+            <img alt="" src="img/1.jpg">
+        </div>
+        <div class="borderLine"></div>
+        <div class="col-8 rightText ">
+            <div class="name"><strong>Div+CSS布局</strong></div>
+            <p>课程归类：<span class="class-category">网页制作</span></p>
+            <p>直播时间：<span>19:00-20:00</span></p>
+            <p>课程简介：<span>div 是一个块级元素。这意味着它的内容自动地开始一个新行。实际上，换行是 div 固有的唯一格式表现。可以通过 div 的 class 或 id 应用额外的样式。</span></p>
+        </div>
+        <a class=" btn btn-danger " href="watching.html">进入直播室</a>
+    </div>
+</div>
+</body>
+</html>

@@ -19,6 +19,11 @@ public class LiveController {
         this.liveServerConfig = liveServerConfig;
     }
 
+    @GetMapping
+    public String liveList() {
+        return "live-list";
+    }
+
     @GetMapping("/{roomName}")
     public ModelAndView live(@PathVariable String roomName) {
         ModelAndView modelAndView = new ModelAndView("live.html");
