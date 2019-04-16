@@ -12,7 +12,7 @@
 <!--导航栏-->
 <div class="container menu navs">
     <nav class="navbar  navbar-expand-sm navbar-fixed-top navbar-light ">
-        <a class="navbar-brand logoBlack" href="index.html" th:href="@{/}"><img src="img/logoBlack.png"></a>
+        <a class="navbar-brand logoBlack" href="index.html" th:href="@{/}"><img src="/img/logoBlack.png"></a>
 
         <ul class="nav navbar-nav">
             <li class="nav-item">
@@ -32,7 +32,7 @@
         <ul class="nav navbar-nav ml-auto user">
             <li class="nav-item">
 						<span class="userImg">
-							<a href="user.html" th:href="@{/user}"><img src="img/1.jpg"></a>
+							<a href="user.html" th:href="@{/user}"><img src="/img/1.jpg"></a>
 							<a class="badge badge-danger badge-pill " href="user.html" id="message" th:href="@{/user}">12</a>
 						</span>
             </li>
@@ -55,31 +55,11 @@
     <div id="nav-subtile">
         <ul class="nav category " id="myTab" role="tablist">
             <li>
-                <a class="categoryItem" data-toggle="tab" href="#all-content" role="tab">全部</a>
+                <a class="categoryItem" data-toggle="tab" href="#" role="tab" th:href="@{/video/}">全部</a>
             </li>
             <li>
-                <a class="categoryItem" data-toggle="tab" href="#Java-content" role="tab">Java</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#Data-content" role="tab">数据结构</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#Artificial-content" role="tab">人工智能</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#C-content" role="tab">C语言</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#webpage-content" role="tab">网页制作</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#Android-content" role="tab">Android</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#fun-content" role="tab">算法设计</a>
-            </li>
-            <li>
-                <a class="categoryItem" data-toggle="tab" href="#JavaWeb-content" role="tab">JavaWeb</a>
+                <a class="categoryItem" data-toggle="tab" href="#" role="tab" th:each="course:${courseList}"
+                   th:href="@{/video/course/}+${course.id}" th:text="${course.name}">Java</a>
             </li>
         </ul>
     </div>
@@ -89,22 +69,22 @@
         <div class="tab-pane fade col-12 active show" id="all-content">
             <meta charset="UTF-8">
             <div class="row classes container">
-                <div class="col-4">
+                <div class="col-4" th:each="video:${videoList}">
                     <div class="testimonial">
-                        <h3 class="lesson-name">类与对象</h3> 直播时间：
-                        <span class="time">2019.04.03</span>
+                        <h3 class="lesson-name" th:text="${video.name}">类与对象</h3>
+                        <!--                        直播日期：<span class="time" th:text="${video.}">2019.04.03</span>-->
                         <div class="nav smallTeacher">
 						<span>
                             <li class="nav-teacher">
-                                <img alt="" src="img/1.jpg">
+                                <img alt="" src="/img/1.jpg">
                             </li>
                         </span>
-                            <span class="borderLine"></span> 主讲人：
-                            <span class="host">沈斌</span>
+                            <span class="borderLine"></span>
+                            老师编号：<span class="host" th:text="${video.teacherId}">沈斌</span>
                         </div>
                         <div class="nav class-bottom">
-                            有<span class="people-number">346</span>人正在学习...
-                            <span class="ml-auto lesson-category">Java</span>
+                            <!--有<span class="people-number">346</span>人正在学习...-->
+                            课程编号：<span class="ml-auto lesson-category" th:text="${video.courseId}">Java</span>
                         </div>
                     </div>
                 </div>
