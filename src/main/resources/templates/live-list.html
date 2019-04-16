@@ -52,18 +52,28 @@
 <!--导航栏-->
 
 <div class="container ">
-    <div class="row infoVideo align-items-center">
+    <div class="row infoVideo align-items-center" th:each="live:${liveList}">
         <div>
             <img alt="" src="img/1.jpg">
         </div>
         <div class="borderLine"></div>
-        <div class="col-8 rightText ">
-            <div class="name"><strong>Div+CSS布局</strong></div>
-            <p>课程归类：<span class="class-category">网页制作</span></p>
-            <p>直播时间：<span>19:00-20:00</span></p>
-            <p>课程简介：<span>div 是一个块级元素。这意味着它的内容自动地开始一个新行。实际上，换行是 div 固有的唯一格式表现。可以通过 div 的 class 或 id 应用额外的样式。</span></p>
+        <div class="col-8 rightText">
+            <div class="name">
+                <strong th:text="${live.name}">Div+CSS布局</strong>
+            </div>
+            <p>
+                课程编号：<span class="class-category" th:text="${live.courseId}">网页制作</span>
+                专业编号：<span th:text="${live.majorId}">软件工程</span>
+                面向年级：<span th:text="${live.grade}">2016</span>
+                老师编号：<span th:text="${live.teacherId}">123</span>
+            </p>
+            <p>
+                直播日期：<span th:text="${#dates.format(live.date, 'yyyy-MM-dd')}">2016/6/6</span>
+                开始时间：<span th:text="${live.startTime}">19:00-20:00</span>
+                直播长度：<span th:text="${live.length}">60 分钟</span>
+            </p>
         </div>
-        <a class=" btn btn-danger " href="watching.html">进入直播室</a>
+        <a class=" btn btn-danger " href="#" th:href="@{/live/}+${live.teacherId}+@{/}+${live.id}">进入直播室</a>
     </div>
 </div>
 </body>
