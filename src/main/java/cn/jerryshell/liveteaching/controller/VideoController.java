@@ -53,7 +53,7 @@ public class VideoController {
         video.setId(UUID.randomUUID().toString());
         video.setTeacherId(session.getAttribute("loginUserId").toString());
         logger.info(video.toString());
-        return "redirect:/video";
+        return "redirect:/user";
     }
 
     @GetMapping("/{videoName}")
@@ -66,7 +66,7 @@ public class VideoController {
     @GetMapping("/delete/{videoName}")
     public String deleteVideo(@PathVariable String videoName) {
         videoService.deleteVideo(videoName);
-        return "redirect:/video";
+        return "redirect:/user";
     }
 
     @GetMapping("/download/{filename}")

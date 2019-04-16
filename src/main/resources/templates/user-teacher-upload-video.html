@@ -71,7 +71,7 @@
                        th:href="@{/user/upload-video}">
                         上传回放
                     </a>
-                    <a class="list-group-item-action" data-toggle="list" href="#2-content">退出当前账号</a>
+                    <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
                                         </select>
                                     </li>
                                     <li>
-                                        <span>上传文件：</span>
+                                        <span>上传视频：</span>
                                         <input multiple name="uploadFile" required type="file"/>
                                     </li>
                                     <li>

@@ -31,4 +31,10 @@ public class LoginController {
         session.setAttribute("loginUserKind", kind);
         return "redirect:/";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 }
