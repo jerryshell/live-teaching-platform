@@ -71,7 +71,7 @@
             <div class="row classes container">
                 <div class="col-4" th:each="video:${videoList}">
                     <div class="testimonial">
-                        <h3 class="lesson-name" th:text="${video.name}">类与对象</h3>
+                        <h3 class="lesson-name" th:text="${video.name}"></h3>
                         <!--                        直播日期：<span class="time" th:text="${video.}">2019.04.03</span>-->
                         <div class="nav smallTeacher">
 						<span>
@@ -86,6 +86,7 @@
                             <!--有<span class="people-number">346</span>人正在学习...-->
                             课程编号：<span class="ml-auto lesson-category" th:text="${video.courseId}">Java</span>
                         </div>
+                        <a class="btn" href="#" th:href="@{/video/}+${video.id}">观看回放</a>
                     </div>
                 </div>
             </div>

@@ -18,18 +18,27 @@ public class Video {
     private String name;
     @NotEmpty
     private String grade;
-
+    private String fileType;
 
     @Override
     public String toString() {
-        return "Live{" +
+        return "Video{" +
                 "id='" + id + '\'' +
                 ", teacherId='" + teacherId + '\'' +
                 ", courseId='" + courseId + '\'' +
                 ", majorId='" + majorId + '\'' +
                 ", name='" + name + '\'' +
                 ", grade='" + grade + '\'' +
+                ", fileType='" + fileType + '\'' +
                 '}';
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public String getId() {

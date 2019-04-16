@@ -15,12 +15,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.net.MalformedURLException;
@@ -79,20 +79,34 @@ public class VideoController {
                          @RequestParam("uploadFile") MultipartFile uploadFile,
                          HttpSession session) {
         String filename = uploadFile.getOriginalFilename();
-        if (filename != null) {
-            videoService.uploadVideo(uploadFile, filename);
+        if (StringUtils.isEmpty(filename)) {
+            return "redirect:/user";
+        }
+        // 文件后缀名
+        String[] split = filename.split("\\.");
+        String fileType = split[split.length - 1];
+        // 只能解码 mp4 文件
+        if (!"mp4".equals(fileType)) {
+            return "redirect:/user";
         }
         video.setId(UUID.randomUUID().toString());
         video.setTeacherId(session.getAttribute("loginUserId").toString());
+        video.setFileType(fileType);
         logger.info(video.toString());
+        logger.info(filename);
+        videoService.uploadVideo(uploadFile, video.getId() + "." + video.getFileType());
+        videoDao.save(video);
         return "redirect:/user";
     }
 
-    @GetMapping("/video/{videoName}")
-    public ModelAndView video(@PathVariable String videoName) {
-        ModelAndView modelAndView = new ModelAndView("video.html");
-        modelAndView.addObject("videoName", videoName);
-        return modelAndView;
+    @GetMapping("/video/{videoId}")
+    public String videoWatching(@PathVariable String videoId, Model model) {
+        Video video = videoDao.findById(videoId).orElse(null);
+        if (video == null) {
+            return "redirect:/video";
+        }
+        model.addAttribute("videoName", video.getId() + "." + video.getFileType());
+        return "video-watching";
     }
 
     @GetMapping("/video/delete/{videoName}")
