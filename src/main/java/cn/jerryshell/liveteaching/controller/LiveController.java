@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -65,19 +64,21 @@ public class LiveController {
             LiveViewModel liveViewModel = LiveViewModel.loadFromModel(live, teacherDao, courseDao, majorDao);
             liveViewModelList.add(liveViewModel);
         }
-        logger.info(liveViewModelList.toString());
+        logger.debug(liveViewModelList.toString());
         model.addAttribute("liveViewModel", liveViewModelList);
         model.addAttribute("liveList", liveList);
         return "live-list";
     }
 
-    @GetMapping("/live/{roomName}")
-    public ModelAndView live(@PathVariable String roomName) {
-        ModelAndView modelAndView = new ModelAndView("live.html");
-        modelAndView.addObject("ip", liveServerConfig.getIp());
-        modelAndView.addObject("port", liveServerConfig.getPort());
-        modelAndView.addObject("roomName", roomName);
-        return modelAndView;
+    @GetMapping("/live/{teacherId}/{roomName}")
+    public String live(@PathVariable String teacherId,
+                       @PathVariable String roomName,
+                       Model model) {
+        model.addAttribute("ip", liveServerConfig.getIp());
+        model.addAttribute("port", liveServerConfig.getPort());
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("roomName", roomName);
+        return "live-watching";
     }
 
     @PostMapping("/live")
