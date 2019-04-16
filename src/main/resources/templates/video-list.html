@@ -69,10 +69,10 @@
         <div class="tab-pane fade col-12 active show" id="all-content">
             <meta charset="UTF-8">
             <div class="row classes container">
-                <div class="col-4" th:each="video:${videoList}">
+                <div class="col-4" th:each="videoVM:${videoViewModelList}">
                     <div class="testimonial">
-                        <h3 class="lesson-name" th:text="${video.name}"></h3>
-                        <!--                        直播日期：<span class="time" th:text="${video.}">2019.04.03</span>-->
+                        <h3 class="lesson-name" th:text="${videoVM.name}"></h3>
+                        <!--                        直播日期：<span class="time" th:text="${videoVM.}">2019.04.03</span>-->
                         <div class="nav smallTeacher">
 						<span>
                             <li class="nav-teacher">
@@ -80,13 +80,13 @@
                             </li>
                         </span>
                             <span class="borderLine"></span>
-                            老师编号：<span class="host" th:text="${video.teacherId}">沈斌</span>
+                            老师：<span class="host" th:text="${videoVM.teacher.nickname}">沈斌</span>
                         </div>
                         <div class="nav class-bottom">
                             <!--有<span class="people-number">346</span>人正在学习...-->
-                            课程编号：<span class="ml-auto lesson-category" th:text="${video.courseId}">Java</span>
+                            <span class="ml-auto lesson-category" th:text="${videoVM.course.name}">Java</span>
                         </div>
-                        <a class="btn" href="#" th:href="@{/video/}+${video.id}">观看回放</a>
+                        <a class="btn" href="#" th:href="@{/video/}+${videoVM.id}">观看回放</a>
                     </div>
                 </div>
             </div>

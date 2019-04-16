@@ -2,10 +2,12 @@ package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.UploadVideoConfig;
 import cn.jerryshell.liveteaching.dao.CourseDao;
+import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.dao.VideoDao;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Video;
 import cn.jerryshell.liveteaching.service.VideoService;
+import cn.jerryshell.liveteaching.vm.VideoViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +38,7 @@ public class VideoController {
     private UploadVideoConfig uploadVideoConfig;
     private VideoDao videoDao;
     private CourseDao courseDao;
+    private TeacherDao teacherDao;
 
     @Autowired
     public void setVideoService(VideoService videoService) {
@@ -56,12 +60,24 @@ public class VideoController {
         this.courseDao = courseDao;
     }
 
+    @Autowired
+    public void setTeacherDao(TeacherDao teacherDao) {
+        this.teacherDao = teacherDao;
+    }
+
     @GetMapping("/video")
     public String list(Model model) {
         List<Course> courseList = courseDao.findAll();
         model.addAttribute("courseList", courseList);
         List<Video> videoList = videoDao.findAll();
         model.addAttribute("videoList", videoList);
+        List<VideoViewModel> videoViewModelList = new ArrayList<>(videoList.size());
+        for (Video video : videoList) {
+            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherDao, courseDao);
+            videoViewModelList.add(videoVM);
+        }
+        logger.debug(videoViewModelList.toString());
+        model.addAttribute("videoViewModelList", videoViewModelList);
         return "video-list";
     }
 
