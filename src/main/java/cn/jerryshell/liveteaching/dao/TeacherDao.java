@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, String> {
+    Teacher findByIdAndPassword(String id, String password);
 }
