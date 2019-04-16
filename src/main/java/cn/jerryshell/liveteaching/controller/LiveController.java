@@ -3,6 +3,8 @@ package cn.jerryshell.liveteaching.controller;
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
 import cn.jerryshell.liveteaching.dao.LiveDao;
 import cn.jerryshell.liveteaching.model.Live;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Controller
 public class LiveController {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     private LiveServerConfig liveServerConfig;
     private LiveDao liveDao;
 
@@ -38,14 +41,6 @@ public class LiveController {
         return "live-list";
     }
 
-//    @GetMapping
-//    public String liveList(HttpSession session, Model model) {
-//        String loginUserId = session.getAttribute("loginUserId").toString();
-//        List<Live> liveList = liveDao.findByTeacherId(loginUserId);
-//        model.addAttribute("liveList", liveList);
-//        return "live-list";
-//    }
-
     @GetMapping("/live/{roomName}")
     public ModelAndView live(@PathVariable String roomName) {
         ModelAndView modelAndView = new ModelAndView("live.html");
@@ -59,7 +54,8 @@ public class LiveController {
     public String createLive(Live live, HttpSession session) {
         live.setId(UUID.randomUUID().toString());
         live.setTeacherId(session.getAttribute("loginUserId").toString());
-        System.out.println(live);
+        logger.info(live.toString());
+        liveDao.save(live);
         return "redirect:/user";
     }
 }
