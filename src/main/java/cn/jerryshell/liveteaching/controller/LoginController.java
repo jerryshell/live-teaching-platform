@@ -2,6 +2,8 @@ package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.dao.StudentDao;
 import cn.jerryshell.liveteaching.dao.TeacherDao;
+import cn.jerryshell.liveteaching.model.Student;
+import cn.jerryshell.liveteaching.model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,10 +41,10 @@ public class LoginController {
         String loginResult = null;
         switch (kind) {
             case "student":
-                loginResult = studentLogin(id, password);
+                loginResult = studentLogin(id, password, session);
                 break;
             case "teacher":
-                loginResult = teacherLogin(id, password);
+                loginResult = teacherLogin(id, password, session);
         }
         if (loginResult == null) {
             return "/login";
@@ -52,12 +54,22 @@ public class LoginController {
         return "redirect:/";
     }
 
-    private String studentLogin(String id, String password) {
-        return studentDao.findByIdAndPassword(id, password) == null ? null : "redirect:/";
+    private String studentLogin(String id, String password, HttpSession session) {
+        Student student = studentDao.findByIdAndPassword(id, password).orElse(null);
+        if (student == null) {
+            return null;
+        }
+        session.setAttribute("loginUserNickname", student.getNickname());
+        return "redirect:/";
     }
 
-    private String teacherLogin(String id, String password) {
-        return teacherDao.findByIdAndPassword(id, password) == null ? null : "redirect:/";
+    private String teacherLogin(String id, String password, HttpSession session) {
+        Teacher teacher = teacherDao.findByIdAndPassword(id, password).orElse(null);
+        if (teacher == null) {
+            return null;
+        }
+        session.setAttribute("loginUserNickname", teacher.getNickname());
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
