@@ -93,7 +93,10 @@
                                 开始时间：<span th:text="${live.startTime}">19:00-20:00</span>
                                 直播长度：<span th:text="${live.length}">60 分钟</span>
                             </p>
-                            <a class=" btn ml-auto " href="#">结束直播</a>
+                            <form method="post" th:action="@{/live/}+${live.id}">
+                                <input hidden name="_method" value="delete"/>
+                                <button class="btn btn-danger" type="submit">结束直播</button>
+                            </form>
                             <a class=" btn ml-auto " href="#"
                                th:href="@{/live/}+${live.teacherId}+@{/}+${live.id}">进入直播</a>
                         </div>
