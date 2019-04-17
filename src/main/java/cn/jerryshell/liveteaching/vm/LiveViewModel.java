@@ -8,7 +8,9 @@ import cn.jerryshell.liveteaching.model.Live;
 import cn.jerryshell.liveteaching.model.Major;
 import cn.jerryshell.liveteaching.model.Teacher;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LiveViewModel {
     private String id;
@@ -22,7 +24,7 @@ public class LiveViewModel {
     private String length;
     private String pushUrl; // 推流地址
 
-    public static LiveViewModel loadFromModel(String liveServerIp, Live live, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
+    public static LiveViewModel loadFromLive(String liveServerIp, Live live, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
         LiveViewModel liveViewModel = new LiveViewModel();
         liveViewModel.setId(live.getId());
         liveViewModel.setName(live.getName());
@@ -41,6 +43,15 @@ public class LiveViewModel {
         Major major = majorDao.findById(live.getMajorId()).orElse(null);
         liveViewModel.setMajor(major);
         return liveViewModel;
+    }
+
+    public static List<LiveViewModel> loadFromLiveList(String liveServerIp, List<Live> liveList, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
+        List<LiveViewModel> liveVMList = new ArrayList<>(liveList.size());
+        for (Live live : liveList) {
+            LiveViewModel liveVM = LiveViewModel.loadFromLive(liveServerIp, live, teacherDao, courseDao, majorDao);
+            liveVMList.add(liveVM);
+        }
+        return liveVMList;
     }
 
     @Override

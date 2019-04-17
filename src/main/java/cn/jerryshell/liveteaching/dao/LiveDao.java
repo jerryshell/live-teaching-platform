@@ -12,4 +12,6 @@ public interface LiveDao extends JpaRepository<Live, String> {
     List<Live> findByTeacherId(String teacherId);
 
     Integer countByDateAfter(Date date);
+
+    List<Live> findByDateAfterAndMajorIdAndGrade(Date date, String majorId, String grade);
 }

@@ -1,13 +1,11 @@
 package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
-import cn.jerryshell.liveteaching.dao.CourseDao;
-import cn.jerryshell.liveteaching.dao.LiveDao;
-import cn.jerryshell.liveteaching.dao.MajorDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
+import cn.jerryshell.liveteaching.dao.*;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Live;
 import cn.jerryshell.liveteaching.model.Major;
+import cn.jerryshell.liveteaching.model.Student;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,6 +24,7 @@ public class UserController {
     private MajorDao majorDao;
     private TeacherDao teacherDao;
     private LiveServerConfig liveServerConfig;
+    private StudentDao studentDao;
 
     @Autowired
     public void setLiveDao(LiveDao liveDao) {
@@ -52,13 +51,19 @@ public class UserController {
         this.liveServerConfig = liveServerConfig;
     }
 
+    @Autowired
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
     @GetMapping("/user")
     public String toUserPage(HttpSession session, Model model) {
         String loginUserKind = session.getAttribute("loginUserKind").toString();
         String url = "redirect:/";
         switch (loginUserKind) {
             case "student":
-                url = toStudentUserPage();
+                String studentId = session.getAttribute("loginUserId").toString();
+                url = toStudentUserPage(studentId, model);
                 break;
             case "teacher":
                 String teacherId = session.getAttribute("loginUserId").toString();
@@ -68,19 +73,23 @@ public class UserController {
         return url;
     }
 
-    private String toStudentUserPage() {
+    private String toStudentUserPage(String studentId, Model model) {
+        Student student = studentDao.findById(studentId).orElse(null);
+        if (student == null) {
+            return "redirect:/";
+        }
+        // 过滤时间和专业和年级
+        Date lastDayDate = new Date(System.currentTimeMillis() - 86400000);
+        List<Live> liveList = liveDao.findByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherDao, courseDao, majorDao);
+        model.addAttribute("liveViewModelList", liveVMList);
         return "user-student";
     }
 
     private String toTeacherUserPage(String teacherId, Model model) {
         List<Live> liveList = liveDao.findByTeacherId(teacherId);
-        List<LiveViewModel> liveViewModelList = new ArrayList<>(liveList.size());
-        for (Live live : liveList) {
-            LiveViewModel liveVM = LiveViewModel.loadFromModel(liveServerConfig.getIp(), live, teacherDao, courseDao, majorDao);
-            liveViewModelList.add(liveVM);
-        }
-        model.addAttribute("liveList", liveList);
-        model.addAttribute("liveViewModelList", liveViewModelList);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherDao, courseDao, majorDao);
+        model.addAttribute("liveViewModelList", liveVMList);
         return "user-teacher";
     }
 

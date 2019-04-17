@@ -20,12 +20,12 @@
         <div class="col-3" id="left-info">
             <div class="left-info">
                 <div id="userIcon"><img src="img/1.jpg">
-                    <h3 id="user-name" th:text="${session.loginUserId}">用戶名</h3>
+                    <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
                 </div>
                 <div class="list-group">
                     <a class="list-group-item-action active show" data-toggle="list" href="#message-content">
                         今日直播
-                        <span class="badge badge-danger badge-pill ml-4">12</span>
+                        <span class="badge badge-danger badge-pill ml-4" th:text="${liveViewModelList.size()}">12</span>
                     </a>
                     <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
                 </div>
@@ -35,14 +35,33 @@
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="myZhibo">
-                        <div class="row infoVideo align-items-center">
-                            <div class="col-6 rightText ">
-                                <div class="name"><strong>Div+CSS布局</strong></div>
-                                <p>课程归类：<span class="class-category">网页制作</span></p>
-                                <p>主讲人：<span>陈慧</span></p>
-                                <p>直播时间：<span>19:00-20:00</span></p>
+                        <div class="infoVideo align-items-center" style="height: 430px;margin-bottom: 2%;"
+                             th:each="liveVM:${liveViewModelList}">
+                            <div class="name" style="padding-top: 2%;">
+                                <strong th:text="${liveVM.name}">Div+CSS布局</strong>
                             </div>
-                            <a class=" btn ml-auto " href="watching.html" id="inZhibo">进入直播室</a>
+                            <div></div>
+                            <br/>
+                            <p>
+                                课程：<span class="class-category" th:text="${liveVM.course.name}">网页制作</span>
+                            </p>
+                            <p>
+                                专业：<span th:text="${liveVM.major.name}">软件工程</span>
+                            </p>
+                            <p>
+                                年级：<span th:text="${liveVM.grade}">2016</span>
+                            </p>
+                            <p>
+                                直播日期：<span th:text="${#dates.format(liveVM.date, 'yyyy-MM-dd')}">2016/6/6</span>
+                            </p>
+                            <p>
+                                开始时间：<span th:text="${liveVM.startTime}">19:00-20:00</span>
+                            </p>
+                            <p>
+                                直播长度：<span th:text="${liveVM.length}">60 分钟</span>
+                            </p>
+                            <a class=" btn ml-auto " href="#" style="float: right; margin-right: 50px;"
+                               th:href="@{/live/}+${liveVM.teacher.id}+@{/}+${liveVM.id}">进入直播</a>
                         </div>
                     </div>
                 </div>
