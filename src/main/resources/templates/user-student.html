@@ -25,7 +25,8 @@
                 <div class="list-group">
                     <a class="list-group-item-action active show" data-toggle="list" href="#message-content">
                         今日直播
-                        <span class="badge badge-danger badge-pill ml-4" th:text="${liveViewModelList.size()}">12</span>
+                        <span class="badge badge-danger badge-pill ml-4" th:if="${liveViewModelList.size()}>0"
+                              th:text="${liveViewModelList.size()}">12</span>
                     </a>
                     <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
                 </div>

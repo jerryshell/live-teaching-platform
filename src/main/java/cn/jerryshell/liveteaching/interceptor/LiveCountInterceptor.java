@@ -1,6 +1,10 @@
 package cn.jerryshell.liveteaching.interceptor;
 
 import cn.jerryshell.liveteaching.dao.LiveDao;
+import cn.jerryshell.liveteaching.dao.StudentDao;
+import cn.jerryshell.liveteaching.dao.TeacherDao;
+import cn.jerryshell.liveteaching.model.Student;
+import cn.jerryshell.liveteaching.model.Teacher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +14,37 @@ import java.util.Date;
 
 public class LiveCountInterceptor implements HandlerInterceptor {
     private LiveDao liveDao;
+    private StudentDao studentDao;
+    private TeacherDao teacherDao;
 
-    public LiveCountInterceptor(LiveDao liveDao) {
+    public LiveCountInterceptor(LiveDao liveDao, StudentDao studentDao, TeacherDao teacherDao) {
         this.liveDao = liveDao;
+        this.studentDao = studentDao;
+        this.teacherDao = teacherDao;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        Integer liveCount = liveDao.countByDateAfter(new Date(System.currentTimeMillis() - 86400000));
+        Object loginUserIdObj = session.getAttribute("loginUserId");
+        if (loginUserIdObj == null) {
+            return true;
+        }
+        Date lastDayDate = new Date(System.currentTimeMillis() - 86400000);
+        String loginUserId = loginUserIdObj.toString();
+        String loginUserKind = session.getAttribute("loginUserKind").toString();
+        Integer todayLiveCount = 0;
+        switch (loginUserKind) {
+            case "student":
+                Student student = studentDao.findById(loginUserId).orElse(null);
+                todayLiveCount = liveDao.countByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
+                break;
+            case "teacher":
+                Teacher teacher = teacherDao.findById(loginUserId).orElse(null);
+                todayLiveCount = liveDao.countByTeacherId(teacher.getId());
+        }
+        session.setAttribute("todayLiveCount", todayLiveCount);
+        Integer liveCount = liveDao.countByDateAfter(lastDayDate);
         session.setAttribute("liveCount", liveCount);
         return true;
     }

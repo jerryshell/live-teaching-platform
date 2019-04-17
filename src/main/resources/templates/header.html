@@ -17,8 +17,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" th:href="@{/live}">
                     <strong>直播教学</strong>
-                    <strong class="badge badge-danger badge-pill" style="margin-left: -5px"
-                            th:text="${session.liveCount}">12</strong>
+                    <!--                    <strong class="badge badge-danger badge-pill" style="margin-left: -5px"-->
+                    <!--                            th:text="${session.liveCount}">12</strong>-->
                 </a>
             </li>
             <li class="nav-item">
@@ -31,12 +31,15 @@
 							<a href="#" th:href="@{/user}">
                                 <img src="/img/1.jpg">
                             </a>
+                            <a class="badge badge-danger badge-pill" href="#" id="message" th:href="@{/user}"
+                               th:if="${session.todayLiveCount}>0" th:text="${session.todayLiveCount}">12</a>
 						</span>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:href="@{/user}">
                     <strong th:text="${session.loginUserNickname}">昵称</strong>
                 </a>
+
             </li>
             <li class="nav-item">
                 <strong class="nav-link" th:text="${session.loginUserKind}=='student'?'学生':'老师'">学生端</strong>

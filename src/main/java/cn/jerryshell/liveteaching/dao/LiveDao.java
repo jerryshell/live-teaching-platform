@@ -11,7 +11,11 @@ import java.util.List;
 public interface LiveDao extends JpaRepository<Live, String> {
     List<Live> findByTeacherId(String teacherId);
 
+    Integer countByTeacherId(String teacherId);
+
     Integer countByDateAfter(Date date);
+
+    Integer countByDateAfterAndMajorIdAndGrade(Date date, String majorId, String grade);
 
     List<Live> findByDateAfterAndMajorIdAndGrade(Date date, String majorId, String grade);
 }
