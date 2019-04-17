@@ -11,44 +11,7 @@
 <body>
 
 <!--导航栏-->
-<div class="container menu navs">
-    <nav class="navbar  navbar-expand-sm navbar-fixed-top navbar-light ">
-        <a class="navbar-brand logoBlack" href="index.html" th:href="@{/}"><img src="img/logoBlack.png"></a>
-
-        <ul class="nav navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html" th:href="@{/}"><strong>首页</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="zhibo.html" th:href="@{/live}"><strong>直播教学</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="video.html" th:href="@{/video}"><strong>课程回放</strong></a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input aria-label="Search" class="form-control mr-sm-2" placeholder="输入文字..." type="search">
-            <button class="btn btn-outline-info my-2 my-sm-0 " type="submit">搜索</button>
-        </form>
-        <ul class="nav navbar-nav ml-auto user">
-            <li class="nav-item">
-						<span class="userImg">
-							<a href="user.html" th:href="@{/user}"><img src="img/1.jpg"></a>
-							<a class="badge badge-danger badge-pill " href="user.html" id="message" th:href="@{/user}">12</a>
-						</span>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="user.html" th:href="@{/user}">
-                    <strong th:text="${session.loginUserId}">用户名</strong>
-                </a>
-            </li>
-            <li class="nav-item">
-                <strong class="nav-link" th:text="${session.loginUserKind}=='student'?'学生':'老师'">学生端</strong>
-            </li>
-        </ul>
-    </nav>
-
-</div>
+<div th:replace="header::header"></div>
 <!--导航栏-->
 
 <div class="container ">
