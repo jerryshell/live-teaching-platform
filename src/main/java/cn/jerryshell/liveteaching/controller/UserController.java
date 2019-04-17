@@ -1,21 +1,38 @@
 package cn.jerryshell.liveteaching.controller;
 
+import cn.jerryshell.liveteaching.dao.CourseDao;
 import cn.jerryshell.liveteaching.dao.LiveDao;
+import cn.jerryshell.liveteaching.dao.MajorDao;
+import cn.jerryshell.liveteaching.model.Course;
+import cn.jerryshell.liveteaching.model.Major;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private LiveDao liveDao;
+    private CourseDao courseDao;
+    private MajorDao majorDao;
 
     @Autowired
     public void setLiveDao(LiveDao liveDao) {
         this.liveDao = liveDao;
+    }
+
+    @Autowired
+    public void setCourseDao(CourseDao courseDao) {
+        this.courseDao = courseDao;
+    }
+
+    @Autowired
+    public void setMajorDao(MajorDao majorDao) {
+        this.majorDao = majorDao;
     }
 
     @GetMapping("/user")
@@ -44,7 +61,11 @@ public class UserController {
     }
 
     @GetMapping("/user/create-live")
-    public String toCreateLivePage() {
+    public String toCreateLivePage(Model model) {
+        List<Course> courseList = courseDao.findAll();
+        List<Major> majorList = majorDao.findAll();
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("majorList", majorList);
         return "user-teacher-create-live";
     }
 
