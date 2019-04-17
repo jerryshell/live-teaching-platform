@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,27 +65,21 @@ public class VideoController {
     }
 
     @GetMapping("/video")
-    public String list(Model model) {
-        List<Course> courseList = courseDao.findAll();
-        model.addAttribute("courseList", courseList);
-        List<Video> videoList = videoDao.findAll();
-        model.addAttribute("videoList", videoList);
-        List<VideoViewModel> videoViewModelList = new ArrayList<>(videoList.size());
-        for (Video video : videoList) {
-            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherDao, courseDao);
-            videoViewModelList.add(videoVM);
-        }
-        logger.debug(videoViewModelList.toString());
-        model.addAttribute("videoViewModelList", videoViewModelList);
-        return "video-list";
+    public String index(Model model) {
+        return list(model, videoDao.findAll());
     }
 
     @GetMapping("/video/course/{courseId}")
-    public String listByCourseId(@PathVariable String courseId, Model model) {
+    public String indexByCourseId(@PathVariable String courseId, Model model) {
+        return list(model, videoDao.findByCourseId(courseId));
+    }
+
+    private String list(Model model, List<Video> videoList) {
         List<Course> courseList = courseDao.findAll();
         model.addAttribute("courseList", courseList);
-        List<Video> videoList = videoDao.findByCourseId(courseId);
-        model.addAttribute("videoList", videoList);
+        List<VideoViewModel> videoViewModelList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
+        model.addAttribute("videoViewModelList", videoViewModelList);
+        logger.debug(videoViewModelList.toString());
         return "video-list";
     }
 

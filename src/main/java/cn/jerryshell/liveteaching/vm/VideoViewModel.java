@@ -6,6 +6,9 @@ import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Teacher;
 import cn.jerryshell.liveteaching.model.Video;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VideoViewModel {
     private String id;
     private Teacher teacher;
@@ -31,6 +34,15 @@ public class VideoViewModel {
         Course course = courseDao.findById(video.getCourseId()).orElse(null);
         videoViewModel.setCourse(course);
         return videoViewModel;
+    }
+
+    public static List<VideoViewModel> loadFromVideoList(List<Video> videoList, TeacherDao teacherDao, CourseDao courseDao) {
+        List<VideoViewModel> videoViewModelList = new ArrayList<>(videoList.size());
+        for (Video video : videoList) {
+            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherDao, courseDao);
+            videoViewModelList.add(videoVM);
+        }
+        return videoViewModelList;
     }
 
     @Override
