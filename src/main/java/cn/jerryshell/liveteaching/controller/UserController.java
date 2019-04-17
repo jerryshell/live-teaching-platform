@@ -87,7 +87,11 @@ public class UserController {
     }
 
     @GetMapping("/user/upload-video")
-    public String toUploadVideo() {
+    public String toUploadVideo(Model model) {
+        List<Course> courseList = courseDao.findAll();
+        List<Major> majorList = majorDao.findAll();
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("majorList", majorList);
         return "user-teacher-upload-video";
     }
 }

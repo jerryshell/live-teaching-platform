@@ -84,22 +84,28 @@
                                 <ul>
                                     <li>
                                         <span>视频名称：</span>
-                                        <input name="name" placeholder="Java 面向对象" required type="text">
+                                        <input name="name" placeholder="如：Java 面向对象" required type="text">
                                     </li>
                                     <li>
                                         <span>所属课程：</span>
                                         <select name="courseId" required>
-                                            <option value="1">Java</option>
+                                            <option th:each="course:${courseList}" th:text="${course.name}"
+                                                    th:value="${course.id}"
+                                                    value="1">Java
+                                            </option>
                                         </select>
                                     </li>
                                     <li>
                                         <span>面向年级：</span>
-                                        <input name="grade" placeholder="2016" required type="text">
+                                        <input name="grade" placeholder="如：2016" required type="text">
                                     </li>
                                     <li>
                                         <span>面向专业：</span>
-                                        <select name="majorId" required>
-                                            <option value="1">软件工程</option>
+                                        <select name="majorId">
+                                            <option th:each="major:${majorList}" th:text="${major.name}"
+                                                    th:value="${major.id}"
+                                                    value="1">软件工程
+                                            </option>
                                         </select>
                                     </li>
                                     <li>
