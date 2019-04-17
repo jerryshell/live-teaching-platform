@@ -78,27 +78,27 @@
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="myZhibo">
-                        <div class="row infoVideo align-items-center" th:each="live:${liveList}">
+                        <div class="row infoVideo align-items-center" th:each="liveVM:${liveViewModelList}">
                             <div class="name">
-                                <strong th:text="${live.name}">Div+CSS布局</strong>
+                                <strong th:text="${liveVM.name}">Div+CSS布局</strong>
                             </div>
                             <div></div>
                             <p>
-                                课程编号：<span class="class-category" th:text="${live.courseId}">网页制作</span>
-                                专业编号：<span th:text="${live.majorId}">软件工程</span>
-                                面向年级：<span th:text="${live.grade}">2016</span>
+                                课程：<span class="class-category" th:text="${liveVM.course.name}">网页制作</span>
+                                专业：<span th:text="${liveVM.major.name}">软件工程</span>
+                                年级：<span th:text="${liveVM.grade}">2016</span>
                             </p>
                             <p>
-                                直播日期：<span th:text="${#dates.format(live.date, 'yyyy-MM-dd')}">2016/6/6</span>
-                                开始时间：<span th:text="${live.startTime}">19:00-20:00</span>
-                                直播长度：<span th:text="${live.length}">60 分钟</span>
+                                直播日期：<span th:text="${#dates.format(liveVM.date, 'yyyy-MM-dd')}">2016/6/6</span>
+                                开始时间：<span th:text="${liveVM.startTime}">19:00-20:00</span>
+                                直播长度：<span th:text="${liveVM.length}">60 分钟</span>
                             </p>
-                            <form method="post" th:action="@{/live/}+${live.id}">
+                            <form method="post" th:action="@{/live/}+${liveVM.id}">
                                 <input hidden name="_method" value="delete"/>
                                 <button class="btn btn-danger" type="submit">结束直播</button>
                             </form>
                             <a class=" btn ml-auto " href="#"
-                               th:href="@{/live/}+${live.teacherId}+@{/}+${live.id}">进入直播</a>
+                               th:href="@{/live/}+${liveVM.teacher.id}+@{/}+${liveVM.id}">进入直播</a>
                         </div>
                     </div>
                 </div>
