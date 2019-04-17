@@ -78,27 +78,45 @@
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="myZhibo">
-                        <div class="row infoVideo align-items-center" th:each="liveVM:${liveViewModelList}">
-                            <div class="name">
+                        <div class="infoVideo align-items-center" style="height: 530px;margin-bottom: 2%;"
+                             th:each="liveVM:${liveViewModelList}">
+                            <div class="name" style="padding-top: 2%;">
                                 <strong th:text="${liveVM.name}">Div+CSS布局</strong>
                             </div>
                             <div></div>
+                            <br/>
                             <p>
                                 课程：<span class="class-category" th:text="${liveVM.course.name}">网页制作</span>
+                            </p>
+                            <p>
                                 专业：<span th:text="${liveVM.major.name}">软件工程</span>
+                            </p>
+                            <p>
                                 年级：<span th:text="${liveVM.grade}">2016</span>
                             </p>
                             <p>
                                 直播日期：<span th:text="${#dates.format(liveVM.date, 'yyyy-MM-dd')}">2016/6/6</span>
+                            </p>
+                            <p>
                                 开始时间：<span th:text="${liveVM.startTime}">19:00-20:00</span>
+                            </p>
+                            <p>
                                 直播长度：<span th:text="${liveVM.length}">60 分钟</span>
                             </p>
-                            <form method="post" th:action="@{/live/}+${liveVM.id}">
+                            <p>
+                                推流地址：<span th:text="${liveVM.pushUrl}">rtmp://127.0.0.1/live/2</span>
+                            </p>
+                            <p>
+                                推流密钥：<span th:text="${liveVM.id}">7a20dc3a-b3fd-4ef1-95b5-89ad44dd6c6c</span>
+                            </p>
+                            <form method="post" style="float: right; margin-right: 50px;"
+                                  th:action="@{/live/}+${liveVM.id}">
                                 <input hidden name="_method" value="delete"/>
                                 <button class="btn btn-danger" type="submit">结束直播</button>
+                                <a class=" btn ml-auto " href="#"
+                                   th:href="@{/live/}+${liveVM.teacher.id}+@{/}+${liveVM.id}">进入直播</a>
                             </form>
-                            <a class=" btn ml-auto " href="#"
-                               th:href="@{/live/}+${liveVM.teacher.id}+@{/}+${liveVM.id}">进入直播</a>
+
                         </div>
                     </div>
                 </div>

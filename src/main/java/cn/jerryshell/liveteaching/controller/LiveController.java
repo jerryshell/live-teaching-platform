@@ -62,7 +62,7 @@ public class LiveController {
         List<Live> liveList = liveDao.findAll();
         List<LiveViewModel> liveViewModelList = new ArrayList<>(liveList.size());
         for (Live live : liveList) {
-            LiveViewModel liveViewModel = LiveViewModel.loadFromModel(live, teacherDao, courseDao, majorDao);
+            LiveViewModel liveViewModel = LiveViewModel.loadFromModel(liveServerConfig.getIp(), live, teacherDao, courseDao, majorDao);
             liveViewModelList.add(liveViewModel);
         }
         logger.debug(liveViewModelList.toString());

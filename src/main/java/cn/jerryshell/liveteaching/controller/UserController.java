@@ -1,5 +1,6 @@
 package cn.jerryshell.liveteaching.controller;
 
+import cn.jerryshell.liveteaching.config.LiveServerConfig;
 import cn.jerryshell.liveteaching.dao.CourseDao;
 import cn.jerryshell.liveteaching.dao.LiveDao;
 import cn.jerryshell.liveteaching.dao.MajorDao;
@@ -24,6 +25,7 @@ public class UserController {
     private CourseDao courseDao;
     private MajorDao majorDao;
     private TeacherDao teacherDao;
+    private LiveServerConfig liveServerConfig;
 
     @Autowired
     public void setLiveDao(LiveDao liveDao) {
@@ -43,6 +45,11 @@ public class UserController {
     @Autowired
     public void setTeacherDao(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
+    }
+
+    @Autowired
+    public void setLiveServerConfig(LiveServerConfig liveServerConfig) {
+        this.liveServerConfig = liveServerConfig;
     }
 
     @GetMapping("/user")
@@ -69,7 +76,7 @@ public class UserController {
         List<Live> liveList = liveDao.findByTeacherId(teacherId);
         List<LiveViewModel> liveViewModelList = new ArrayList<>(liveList.size());
         for (Live live : liveList) {
-            LiveViewModel liveVM = LiveViewModel.loadFromModel(live, teacherDao, courseDao, majorDao);
+            LiveViewModel liveVM = LiveViewModel.loadFromModel(liveServerConfig.getIp(), live, teacherDao, courseDao, majorDao);
             liveViewModelList.add(liveVM);
         }
         model.addAttribute("liveList", liveList);

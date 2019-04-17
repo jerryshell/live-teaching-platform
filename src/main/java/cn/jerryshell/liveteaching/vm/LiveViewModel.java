@@ -20,8 +20,9 @@ public class LiveViewModel {
     private Date date;
     private String startTime;
     private String length;
+    private String pushUrl; // 推流地址
 
-    public static LiveViewModel loadFromModel(Live live, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
+    public static LiveViewModel loadFromModel(String liveServerIp, Live live, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
         LiveViewModel liveViewModel = new LiveViewModel();
         liveViewModel.setId(live.getId());
         liveViewModel.setName(live.getName());
@@ -32,6 +33,7 @@ public class LiveViewModel {
 
         Teacher teacher = teacherDao.findById(live.getTeacherId()).orElse(null);
         liveViewModel.setTeacher(teacher);
+        liveViewModel.setPushUrl("rtmp://" + liveServerIp + "/live/" + teacher.getId());
 
         Course course = courseDao.findById(live.getCourseId()).orElse(null);
         liveViewModel.setCourse(course);
@@ -53,7 +55,16 @@ public class LiveViewModel {
                 ", date=" + date +
                 ", startTime='" + startTime + '\'' +
                 ", length='" + length + '\'' +
+                ", pushUrl='" + pushUrl + '\'' +
                 '}';
+    }
+
+    public String getPushUrl() {
+        return pushUrl;
+    }
+
+    public void setPushUrl(String pushUrl) {
+        this.pushUrl = pushUrl;
     }
 
     public String getId() {
