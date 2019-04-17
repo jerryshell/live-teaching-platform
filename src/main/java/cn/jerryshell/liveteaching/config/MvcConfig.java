@@ -1,36 +1,32 @@
 package cn.jerryshell.liveteaching.config;
 
+import cn.jerryshell.liveteaching.dao.LiveDao;
+import cn.jerryshell.liveteaching.interceptor.LiveCountInterceptor;
+import cn.jerryshell.liveteaching.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 @Configuration
 public class MvcConfig {
+    private LiveDao liveDao;
+
+    @Autowired
+    public void setLiveDao(LiveDao liveDao) {
+        this.liveDao = liveDao;
+    }
+
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(new HandlerInterceptor() {
-                    @Override
-                    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                        HttpSession session = request.getSession();
-                        Object loginUserId = session.getAttribute("loginUserId");
-                        if (loginUserId == null) {
-                            response.sendRedirect("/login");
-                            return false;
-                        }
-                        return true;
-                    }
-                })
+                registry.addInterceptor(new LoginInterceptor())
                         .addPathPatterns("/**")
                         .excludePathPatterns("/", "/login", "/register/**", "/css/**", "/js/**", "/img/**");
+                registry.addInterceptor(new LiveCountInterceptor(liveDao)).addPathPatterns("/**");
             }
         };
     }
