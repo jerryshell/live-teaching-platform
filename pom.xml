@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.jerryshell</groupId>
-    <artifactId>upload-video</artifactId>
+    <artifactId>live-teaching-platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>upload-video</name>
+    <name>live-teaching-platform</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
