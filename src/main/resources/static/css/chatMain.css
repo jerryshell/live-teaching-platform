@@ -27,7 +27,7 @@ body:before {
     position: absolute;
     top: 0;
     left: 0;
-    background: #128ff2;
+    /*background: #128ff2;*/
     content: "";
     z-index: 0;
 }

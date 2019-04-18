@@ -7,19 +7,34 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>PC HLS Live Video</title>
     <link href="/css/video-js-cdn.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
 </head>
 
 <body>
+<!--导航栏-->
+<div th:replace="header::header"></div>
+<!--导航栏-->
 
-<video autoplay class="video-js vjs-default-skin" controls height="600" id="hls-video" playsinline
-       preload="auto" webkit-playsinline width="1000" x-webkit-airplay="true" x5-video-player-fullscreen="true"
-       x5-video-player-typ="h5">
-    <!-- 直播的视频源 -->
-    <source src="http://192.168.43.216:8080/live/test.m3u8"
-            th:src="${'http://' + ip + ':' + port + '/live/'+ teacherId + '/' + roomName + '.m3u8'}"
-            type="application/x-mpegURL">
-</video>
-
+<!--播放器-->
+<div class="container">
+    <div class="row">
+        <video autoplay class="video-js vjs-default-skin col-9" controls height="550" id="hls-video" playsinline
+               preload="auto" webkit-playsinline x-webkit-airplay="true" x5-video-player-fullscreen="true"
+               x5-video-player-typ="h5">
+            <!-- 直播的视频源 -->
+            <source src="http://192.168.43.216:8080/live/test.m3u8"
+                    th:src="${'http://' + ip + ':' + port + '/live/'+ teacherId + '/' + roomName + '.m3u8'}"
+                    type="application/x-mpegURL">
+        </video>
+        <div class="col-3" id="talks" style="padding: 0;margin: 0;margin-left: -1%;">
+            <iframe border="0" class="col-12" frameborder="no" id="mainFrame" onload="resizeIframe(this)" scrolling="no"
+                    src="/chat/roomName" style="height: 550px;" th:src="@{/chat/}+${roomName}"></iframe>
+        </div>
+    </div>
+</div>
+<!--播放器-->
 <script src="/js/video.js"></script>
 <script src="/js/videojs-contrib-hls.js"></script>
 <script>

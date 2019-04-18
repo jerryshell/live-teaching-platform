@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Video</title>
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
 </head>
 <body>
-<video controls="controls" th:src="${'/video/download/' + videoName}" width="1000px"></video>
+<!--导航栏-->
+<div th:replace="header::header"></div>
+<!--导航栏-->
+
+<!--播放器-->
+<video class="col-9" controls="controls" th:src="${'/video/download/' + videoName}" width="1000px"></video>
+<!--播放器-->
 </body>
 </html>

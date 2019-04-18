@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0" name="viewport">
     <title>Spring Boot WebSocket Chat Application</title>
-    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/chatMain.css" rel="stylesheet"/>
 </head>
 <body>
 <noscript>
@@ -11,27 +11,29 @@
 </noscript>
 
 <div id="username-page">
-    <div class="username-page-container">
-        <h1 class="title">Type your username</h1>
+    <div class="hidden">
         <form id="usernameForm" name="usernameForm">
             <div class="form-group">
-                <input autocomplete="off" class="form-control" id="name" placeholder="Username" type="text"/>
-                <input autocomplete="off" class="form-control" id="topicName" placeholder="Topic Name" type="text"/>
+                <input autocomplete="off" class="form-control" id="name" placeholder="Username" th:value="${username}"
+                       type="text"/>
+                <input autocomplete="off" class="form-control" id="topicName" placeholder="Topic Name"
+                       th:value="${topicName}"
+                       type="text"/>
             </div>
             <div class="form-group">
-                <button class="accent username-submit" type="submit">Start Chatting</button>
+                <button class="accent username-submit" type="submit">Start</button>
             </div>
         </form>
     </div>
 </div>
 
-<div class="hidden" id="chat-page">
+<div id="chat-page" style="width: 300px;">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Spring WebSocket Chat Demo</h2>
+            <h2>聊天室</h2>
         </div>
         <div class="connecting">
-            Connecting...
+            正在连接...
         </div>
         <ul id="messageArea">
 
@@ -39,9 +41,9 @@
         <form id="messageForm" name="messageForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input autocomplete="off" class="form-control" id="message" placeholder="Type a message..."
+                    <input autocomplete="off" class="form-control" id="message" placeholder="输入消息..."
                            type="text"/>
-                    <button class="primary" type="submit">Send</button>
+                    <button class="primary" type="submit">发送</button>
                 </div>
             </div>
         </form>
@@ -50,6 +52,9 @@
 
 <script src="/js/sockjs.min.js"></script>
 <script src="/js/stomp.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/chatMain.js"></script>
+<script>
+    connect();
+</script>
 </body>
 </html>
