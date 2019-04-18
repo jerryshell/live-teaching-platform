@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0" name="viewport">
+    <title>Spring Boot WebSocket Chat Application</title>
+    <link href="/css/main.css" rel="stylesheet"/>
+</head>
+<body>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">Type your username</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" id="name" placeholder="Username" type="text"/>
+                <input autocomplete="off" class="form-control" id="topicName" placeholder="Topic Name" type="text"/>
+            </div>
+            <div class="form-group">
+                <button class="accent username-submit" type="submit">Start Chatting</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="hidden" id="chat-page">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Spring WebSocket Chat Demo</h2>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea">
+
+        </ul>
+        <form id="messageForm" name="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input autocomplete="off" class="form-control" id="message" placeholder="Type a message..."
+                           type="text"/>
+                    <button class="primary" type="submit">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/js/sockjs.min.js"></script>
+<script src="/js/stomp.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
