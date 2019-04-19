@@ -1,40 +1,47 @@
 package cn.jerryshell.liveteaching.service;
 
 import cn.jerryshell.liveteaching.config.UploadVideoConfig;
+import cn.jerryshell.liveteaching.dao.VideoDao;
+import cn.jerryshell.liveteaching.model.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 @Service
 public class VideoService {
-    private List<String> videoNameList = new LinkedList<>();
     private UploadVideoConfig uploadVideoConfig;
+    private VideoDao videoDao;
+
+    @Autowired
+    public void setVideoDao(VideoDao videoDao) {
+        this.videoDao = videoDao;
+    }
 
     @Autowired
     public void setUploadVideoConfig(UploadVideoConfig uploadVideoConfig) {
         this.uploadVideoConfig = uploadVideoConfig;
     }
 
-    public boolean uploadVideo(MultipartFile uploadFile, String filename) {
+    public void uploadVideo(MultipartFile uploadFile, String filename) {
         File file = new File("/home/jerry/Videos/" + filename);
         try {
             uploadFile.transferTo(file);
-            videoNameList.add(filename);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public boolean deleteVideo(String videoName) {
-        videoNameList.remove(videoName);
-        File file = new File(uploadVideoConfig.getFilepath() + videoName);
-        return file.delete();
+    public void deleteVideoById(String videoId) {
+        Video video = videoDao.findById(videoId).orElse(null);
+        if (video == null) {
+            return;
+        }
+        String filepath = uploadVideoConfig.getFilepath() + "/" + video.getId() + "." + video.getFileType();
+        File file = new File(filepath);
+        file.delete();
+        videoDao.deleteById(video.getId());
     }
 }

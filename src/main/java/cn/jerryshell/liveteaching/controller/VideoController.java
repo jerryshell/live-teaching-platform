@@ -18,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -89,23 +86,23 @@ public class VideoController {
                          HttpSession session) {
         String filename = uploadFile.getOriginalFilename();
         if (StringUtils.isEmpty(filename)) {
-            return "redirect:/user";
+            return "redirect:/user/upload-video";
         }
         // 文件后缀名
         String[] split = filename.split("\\.");
         String fileType = split[split.length - 1];
         // 只能解码 mp4 文件
         if (!"mp4".equals(fileType)) {
-            return "redirect:/user";
+            return "redirect:/user/upload-video";
         }
         video.setId(UUID.randomUUID().toString());
         video.setTeacherId(session.getAttribute("loginUserId").toString());
         video.setFileType(fileType);
-        logger.info(video.toString());
-        logger.info(filename);
+        logger.debug(video.toString());
+        logger.debug(filename);
         videoService.uploadVideo(uploadFile, video.getId() + "." + video.getFileType());
         videoDao.save(video);
-        return "redirect:/user";
+        return "redirect:/user/video-list";
     }
 
     @GetMapping("/video/{videoId}")
@@ -118,10 +115,10 @@ public class VideoController {
         return "video-watching";
     }
 
-    @GetMapping("/video/delete/{videoName}")
-    public String deleteVideo(@PathVariable String videoName) {
-        videoService.deleteVideo(videoName);
-        return "redirect:/user";
+    @DeleteMapping("/video/{videoId}")
+    public String deleteVideo(@PathVariable String videoId) {
+        videoService.deleteVideoById(videoId);
+        return "redirect:/user/video-list";
     }
 
     @GetMapping("/video/download/{filename}")

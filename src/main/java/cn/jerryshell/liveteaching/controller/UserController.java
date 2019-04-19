@@ -2,11 +2,9 @@ package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
 import cn.jerryshell.liveteaching.dao.*;
-import cn.jerryshell.liveteaching.model.Course;
-import cn.jerryshell.liveteaching.model.Live;
-import cn.jerryshell.liveteaching.model.Major;
-import cn.jerryshell.liveteaching.model.Student;
+import cn.jerryshell.liveteaching.model.*;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
+import cn.jerryshell.liveteaching.vm.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +23,7 @@ public class UserController {
     private TeacherDao teacherDao;
     private LiveServerConfig liveServerConfig;
     private StudentDao studentDao;
+    private VideoDao videoDao;
 
     @Autowired
     public void setLiveDao(LiveDao liveDao) {
@@ -54,6 +53,11 @@ public class UserController {
     @Autowired
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
+    }
+
+    @Autowired
+    public void setVideoDao(VideoDao videoDao) {
+        this.videoDao = videoDao;
     }
 
     @GetMapping("/user")
@@ -109,5 +113,14 @@ public class UserController {
         model.addAttribute("courseList", courseList);
         model.addAttribute("majorList", majorList);
         return "user-teacher-upload-video";
+    }
+
+    @GetMapping("/user/video-list")
+    public String toVideoListPage(HttpSession session, Model model) {
+        String loginUserId = session.getAttribute("loginUserId").toString();
+        List<Video> videoList = videoDao.findByTeacherId(loginUserId);
+        List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
+        model.addAttribute("videoViewModelList", videoVMlList);
+        return "user-teacher-video-list";
     }
 }
