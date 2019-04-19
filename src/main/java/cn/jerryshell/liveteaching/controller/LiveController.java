@@ -41,7 +41,7 @@ public class LiveController {
     }
 
     @GetMapping("/live/{teacherId}/{roomName}")
-    public String toLivePage(
+    public String toLiveWatchingPage(
             @PathVariable String teacherId,
             @PathVariable String roomName,
             Model model

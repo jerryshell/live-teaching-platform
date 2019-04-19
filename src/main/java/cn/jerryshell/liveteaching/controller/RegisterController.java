@@ -25,7 +25,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register/student")
-    public String doRegisterStudent(Student student, Model model) {
+    public String registerStudent(Student student, Model model) {
         Student studentFromDB = studentService.findById(student.getId());
         if (studentFromDB != null) {
             model.addAttribute("message", "该学号已经被注册");
@@ -36,7 +36,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register/teacher")
-    public String doRegisterTeacher(Teacher teacher, Model model) {
+    public String registerTeacher(Teacher teacher, Model model) {
         Teacher teacherFromDB = teacherService.findById(teacher.getId());
         if (teacherFromDB != null) {
             model.addAttribute("message", "该工号已经被注册");
