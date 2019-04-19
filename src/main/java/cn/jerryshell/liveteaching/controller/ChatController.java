@@ -16,9 +16,11 @@ import javax.servlet.http.HttpSession;
 public class ChatController {
 
     @GetMapping("/chat/{topicName}")
-    public String toChatPage(@PathVariable String topicName,
-                             HttpSession session,
-                             Model model) {
+    public String toChatPage(
+            @PathVariable String topicName,
+            HttpSession session,
+            Model model
+    ) {
         model.addAttribute("topicName", topicName);
         String loginUserNickname = session.getAttribute("loginUserNickname").toString();
         model.addAttribute("username", loginUserNickname);

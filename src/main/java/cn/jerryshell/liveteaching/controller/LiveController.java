@@ -41,9 +41,11 @@ public class LiveController {
     }
 
     @GetMapping("/live/{teacherId}/{roomName}")
-    public String toLivePage(@PathVariable String teacherId,
-                             @PathVariable String roomName,
-                             Model model) {
+    public String toLivePage(
+            @PathVariable String teacherId,
+            @PathVariable String roomName,
+            Model model
+    ) {
         model.addAttribute("ip", liveServerConfig.getIp());
         model.addAttribute("port", liveServerConfig.getPort());
         model.addAttribute("teacherId", teacherId);

@@ -54,9 +54,11 @@ public class VideoController {
     }
 
     @PostMapping("/video/upload")
-    public String upload(Video video,
-                         @RequestParam("uploadFile") MultipartFile uploadFile,
-                         HttpSession session) {
+    public String upload(
+            Video video,
+            @RequestParam("uploadFile") MultipartFile uploadFile,
+            HttpSession session
+    ) {
         String filename = uploadFile.getOriginalFilename();
         if (StringUtils.isEmpty(filename)) {
             return "redirect:/user/upload-video";

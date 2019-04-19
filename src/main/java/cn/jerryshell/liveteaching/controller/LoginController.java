@@ -26,10 +26,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("id") String id,
-                        @RequestParam("password") String password,
-                        @RequestParam("kind") String kind,
-                        HttpSession session) {
+    public String login(
+            @RequestParam("id") String id,
+            @RequestParam("password") String password,
+            @RequestParam("kind") String kind,
+            HttpSession session
+    ) {
         boolean loginResult = false;
         switch (kind) {
             case "student":
