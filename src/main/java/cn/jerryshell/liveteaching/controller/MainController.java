@@ -10,8 +10,8 @@ public class MainController {
 
     @GetMapping("/")
     public String main(HttpSession session) {
-        Object loginUserId = session.getAttribute("loginUserId");
-        if (loginUserId == null) {
+        Object loginUserIdObj = session.getAttribute("loginUserId");
+        if (loginUserIdObj == null) {
             return "redirect:/login";
         }
         return "main";

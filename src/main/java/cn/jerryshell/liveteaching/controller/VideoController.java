@@ -1,15 +1,12 @@
 package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.UploadVideoConfig;
-import cn.jerryshell.liveteaching.dao.CourseDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
-import cn.jerryshell.liveteaching.dao.VideoDao;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Video;
+import cn.jerryshell.liveteaching.service.CourseService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 import cn.jerryshell.liveteaching.service.VideoService;
 import cn.jerryshell.liveteaching.vm.VideoViewModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -29,46 +26,23 @@ import java.util.UUID;
 @Controller
 public class VideoController {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
     private VideoService videoService;
+    @Autowired
     private UploadVideoConfig uploadVideoConfig;
-    private VideoDao videoDao;
-    private CourseDao courseDao;
-    private TeacherDao teacherDao;
-
     @Autowired
-    public void setVideoService(VideoService videoService) {
-        this.videoService = videoService;
-    }
-
+    private CourseService courseDao;
     @Autowired
-    public void setUploadVideoConfig(UploadVideoConfig uploadVideoConfig) {
-        this.uploadVideoConfig = uploadVideoConfig;
-    }
-
-    @Autowired
-    public void setVideoDao(VideoDao videoDao) {
-        this.videoDao = videoDao;
-    }
-
-    @Autowired
-    public void setCourseDao(CourseDao courseDao) {
-        this.courseDao = courseDao;
-    }
-
-    @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
+    private TeacherService teacherDao;
 
     @GetMapping("/video")
     public String index(Model model) {
-        return list(model, videoDao.findAll());
+        return list(model, videoService.findAll());
     }
 
     @GetMapping("/video/course/{courseId}")
     public String indexByCourseId(@PathVariable String courseId, Model model) {
-        return list(model, videoDao.findByCourseId(courseId));
+        return list(model, videoService.findByCourseId(courseId));
     }
 
     private String list(Model model, List<Video> videoList) {
@@ -76,7 +50,6 @@ public class VideoController {
         model.addAttribute("courseList", courseList);
         List<VideoViewModel> videoViewModelList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
         model.addAttribute("videoViewModelList", videoViewModelList);
-        logger.debug(videoViewModelList.toString());
         return "video-list";
     }
 
@@ -98,16 +71,14 @@ public class VideoController {
         video.setId(UUID.randomUUID().toString());
         video.setTeacherId(session.getAttribute("loginUserId").toString());
         video.setFileType(fileType);
-        logger.debug(video.toString());
-        logger.debug(filename);
         videoService.uploadVideo(uploadFile, video.getId() + "." + video.getFileType());
-        videoDao.save(video);
+        videoService.save(video);
         return "redirect:/user/video-list";
     }
 
     @GetMapping("/video/{videoId}")
     public String videoWatching(@PathVariable String videoId, Model model) {
-        Video video = videoDao.findById(videoId).orElse(null);
+        Video video = videoService.findById(videoId);
         if (video == null) {
             return "redirect:/video";
         }

@@ -1,8 +1,8 @@
 package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
-import cn.jerryshell.liveteaching.dao.*;
 import cn.jerryshell.liveteaching.model.*;
+import cn.jerryshell.liveteaching.service.*;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
 import cn.jerryshell.liveteaching.vm.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,48 +17,20 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private LiveDao liveDao;
-    private CourseDao courseDao;
-    private MajorDao majorDao;
-    private TeacherDao teacherDao;
+    @Autowired
+    private LiveService liveService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private MajorService majorDao;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
     private LiveServerConfig liveServerConfig;
-    private StudentDao studentDao;
-    private VideoDao videoDao;
-
     @Autowired
-    public void setLiveDao(LiveDao liveDao) {
-        this.liveDao = liveDao;
-    }
-
+    private StudentService studentService;
     @Autowired
-    public void setCourseDao(CourseDao courseDao) {
-        this.courseDao = courseDao;
-    }
-
-    @Autowired
-    public void setMajorDao(MajorDao majorDao) {
-        this.majorDao = majorDao;
-    }
-
-    @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
-
-    @Autowired
-    public void setLiveServerConfig(LiveServerConfig liveServerConfig) {
-        this.liveServerConfig = liveServerConfig;
-    }
-
-    @Autowired
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
-    @Autowired
-    public void setVideoDao(VideoDao videoDao) {
-        this.videoDao = videoDao;
-    }
+    private VideoService videoService;
 
     @GetMapping("/user")
     public String toUserPage(HttpSession session, Model model) {
@@ -78,28 +50,28 @@ public class UserController {
     }
 
     private String toStudentUserPage(String studentId, Model model) {
-        Student student = studentDao.findById(studentId).orElse(null);
+        Student student = studentService.findById(studentId);
         if (student == null) {
             return "redirect:/";
         }
         // 过滤时间和专业和年级
         Date lastDayDate = new Date(System.currentTimeMillis() - 86400000);
-        List<Live> liveList = liveDao.findByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherDao, courseDao, majorDao);
+        List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
         model.addAttribute("liveViewModelList", liveVMList);
         return "user-student";
     }
 
     private String toTeacherUserPage(String teacherId, Model model) {
-        List<Live> liveList = liveDao.findByTeacherId(teacherId);
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherDao, courseDao, majorDao);
+        List<Live> liveList = liveService.findByTeacherId(teacherId);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
         model.addAttribute("liveViewModelList", liveVMList);
         return "user-teacher";
     }
 
     @GetMapping("/user/create-live")
     public String toCreateLivePage(Model model) {
-        List<Course> courseList = courseDao.findAll();
+        List<Course> courseList = courseService.findAll();
         List<Major> majorList = majorDao.findAll();
         model.addAttribute("courseList", courseList);
         model.addAttribute("majorList", majorList);
@@ -108,7 +80,7 @@ public class UserController {
 
     @GetMapping("/user/upload-video")
     public String toUploadVideo(Model model) {
-        List<Course> courseList = courseDao.findAll();
+        List<Course> courseList = courseService.findAll();
         List<Major> majorList = majorDao.findAll();
         model.addAttribute("courseList", courseList);
         model.addAttribute("majorList", majorList);
@@ -118,8 +90,8 @@ public class UserController {
     @GetMapping("/user/video-list")
     public String toVideoListPage(HttpSession session, Model model) {
         String loginUserId = session.getAttribute("loginUserId").toString();
-        List<Video> videoList = videoDao.findByTeacherId(loginUserId);
-        List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
+        List<Video> videoList = videoService.findByTeacherId(loginUserId);
+        List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherService, courseService);
         model.addAttribute("videoViewModelList", videoVMlList);
         return "user-teacher-video-list";
     }

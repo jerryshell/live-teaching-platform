@@ -1,10 +1,10 @@
 package cn.jerryshell.liveteaching.vm;
 
-import cn.jerryshell.liveteaching.dao.CourseDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Teacher;
 import cn.jerryshell.liveteaching.model.Video;
+import cn.jerryshell.liveteaching.service.CourseService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ public class VideoViewModel {
 
     public static VideoViewModel loadFromVideo(
             Video video,
-            TeacherDao teacherDao,
-            CourseDao courseDao
+            TeacherService teacherDao,
+            CourseService courseService
     ) {
         VideoViewModel videoViewModel = new VideoViewModel();
         videoViewModel.setId(video.getId());
@@ -28,18 +28,22 @@ public class VideoViewModel {
         videoViewModel.setGrade(video.getGrade());
         videoViewModel.setFileType(video.getFileType());
 
-        Teacher teacher = teacherDao.findById(video.getTeacherId()).orElse(null);
+        Teacher teacher = teacherDao.findById(video.getTeacherId());
         videoViewModel.setTeacher(teacher);
 
-        Course course = courseDao.findById(video.getCourseId()).orElse(null);
+        Course course = courseService.findById(video.getCourseId());
         videoViewModel.setCourse(course);
         return videoViewModel;
     }
 
-    public static List<VideoViewModel> loadFromVideoList(List<Video> videoList, TeacherDao teacherDao, CourseDao courseDao) {
+    public static List<VideoViewModel> loadFromVideoList(
+            List<Video> videoList,
+            TeacherService teacherService,
+            CourseService courseService
+    ) {
         List<VideoViewModel> videoViewModelList = new ArrayList<>(videoList.size());
         for (Video video : videoList) {
-            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherDao, courseDao);
+            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherService, courseService);
             videoViewModelList.add(videoVM);
         }
         return videoViewModelList;

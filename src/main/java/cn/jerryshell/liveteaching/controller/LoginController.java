@@ -1,9 +1,9 @@
 package cn.jerryshell.liveteaching.controller;
 
-import cn.jerryshell.liveteaching.dao.StudentDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.model.Student;
 import cn.jerryshell.liveteaching.model.Teacher;
+import cn.jerryshell.liveteaching.service.StudentService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +15,10 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-    private StudentDao studentDao;
-    private TeacherDao teacherDao;
-
     @Autowired
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
+    private StudentService studentService;
     @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
+    private TeacherService teacherService;
 
     @GetMapping("/login")
     public String toLoginPage() {
@@ -38,7 +30,7 @@ public class LoginController {
                         @RequestParam("password") String password,
                         @RequestParam("kind") String kind,
                         HttpSession session) {
-        String loginResult = null;
+        boolean loginResult = false;
         switch (kind) {
             case "student":
                 loginResult = studentLogin(id, password, session);
@@ -46,7 +38,7 @@ public class LoginController {
             case "teacher":
                 loginResult = teacherLogin(id, password, session);
         }
-        if (loginResult == null) {
+        if (!loginResult) {
             return "/login";
         }
         session.setAttribute("loginUserId", id);
@@ -54,22 +46,22 @@ public class LoginController {
         return "redirect:/";
     }
 
-    private String studentLogin(String id, String password, HttpSession session) {
-        Student student = studentDao.findByIdAndPassword(id, password).orElse(null);
+    private boolean studentLogin(String id, String password, HttpSession session) {
+        Student student = studentService.findByIdAndPassword(id, password);
         if (student == null) {
-            return null;
+            return false;
         }
         session.setAttribute("loginUserNickname", student.getNickname());
-        return "redirect:/";
+        return true;
     }
 
-    private String teacherLogin(String id, String password, HttpSession session) {
-        Teacher teacher = teacherDao.findByIdAndPassword(id, password).orElse(null);
+    private boolean teacherLogin(String id, String password, HttpSession session) {
+        Teacher teacher = teacherService.findByIdAndPassword(id, password);
         if (teacher == null) {
-            return null;
+            return false;
         }
         session.setAttribute("loginUserNickname", teacher.getNickname());
-        return "redirect:/";
+        return true;
     }
 
     @GetMapping("/logout")

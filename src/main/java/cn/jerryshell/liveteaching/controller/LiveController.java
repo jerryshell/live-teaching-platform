@@ -1,11 +1,11 @@
 package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
-import cn.jerryshell.liveteaching.dao.CourseDao;
-import cn.jerryshell.liveteaching.dao.MajorDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.model.Live;
+import cn.jerryshell.liveteaching.service.CourseService;
 import cn.jerryshell.liveteaching.service.LiveService;
+import cn.jerryshell.liveteaching.service.MajorService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,16 +26,16 @@ public class LiveController {
     @Autowired
     private LiveServerConfig liveServerConfig;
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherService teacherService;
     @Autowired
-    private CourseDao courseDao;
+    private CourseService courseService;
     @Autowired
-    private MajorDao majorDao;
+    private MajorService majorService;
 
     @GetMapping("/live")
     public String toLiveListPage(Model model) {
         List<Live> liveList = liveService.findAll();
-        List<LiveViewModel> liveViewModelList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherDao, courseDao, majorDao);
+        List<LiveViewModel> liveViewModelList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService);
         model.addAttribute("liveViewModel", liveViewModelList);
         return "live-list";
     }

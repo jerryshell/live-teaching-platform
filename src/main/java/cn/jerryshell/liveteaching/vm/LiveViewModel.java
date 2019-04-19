@@ -1,12 +1,12 @@
 package cn.jerryshell.liveteaching.vm;
 
-import cn.jerryshell.liveteaching.dao.CourseDao;
-import cn.jerryshell.liveteaching.dao.MajorDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Live;
 import cn.jerryshell.liveteaching.model.Major;
 import cn.jerryshell.liveteaching.model.Teacher;
+import cn.jerryshell.liveteaching.service.CourseService;
+import cn.jerryshell.liveteaching.service.MajorService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +24,13 @@ public class LiveViewModel {
     private String length;
     private String pushUrl; // 推流地址
 
-    public static LiveViewModel loadFromLive(String liveServerIp, Live live, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
+    public static LiveViewModel loadFromLive(
+            String liveServerIp,
+            Live live,
+            TeacherService teacherService,
+            CourseService courseService,
+            MajorService majorService
+    ) {
         LiveViewModel liveViewModel = new LiveViewModel();
         liveViewModel.setId(live.getId());
         liveViewModel.setName(live.getName());
@@ -33,22 +39,29 @@ public class LiveViewModel {
         liveViewModel.setStartTime(live.getStartTime());
         liveViewModel.setLength(live.getLength());
 
-        Teacher teacher = teacherDao.findById(live.getTeacherId()).orElse(null);
+        Teacher teacher = teacherService.findById(live.getTeacherId());
         liveViewModel.setTeacher(teacher);
+
         liveViewModel.setPushUrl("rtmp://" + liveServerIp + "/live/" + teacher.getId());
 
-        Course course = courseDao.findById(live.getCourseId()).orElse(null);
+        Course course = courseService.findById(live.getCourseId());
         liveViewModel.setCourse(course);
 
-        Major major = majorDao.findById(live.getMajorId()).orElse(null);
+        Major major = majorService.findById(live.getMajorId());
         liveViewModel.setMajor(major);
         return liveViewModel;
     }
 
-    public static List<LiveViewModel> loadFromLiveList(String liveServerIp, List<Live> liveList, TeacherDao teacherDao, CourseDao courseDao, MajorDao majorDao) {
+    public static List<LiveViewModel> loadFromLiveList(
+            String liveServerIp,
+            List<Live> liveList,
+            TeacherService teacherService,
+            CourseService courseService,
+            MajorService majorService
+    ) {
         List<LiveViewModel> liveVMList = new ArrayList<>(liveList.size());
         for (Live live : liveList) {
-            LiveViewModel liveVM = LiveViewModel.loadFromLive(liveServerIp, live, teacherDao, courseDao, majorDao);
+            LiveViewModel liveVM = LiveViewModel.loadFromLive(liveServerIp, live, teacherService, courseService, majorService);
             liveVMList.add(liveVM);
         }
         return liveVMList;

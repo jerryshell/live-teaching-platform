@@ -1,13 +1,12 @@
 package cn.jerryshell.liveteaching.controller;
 
-import cn.jerryshell.liveteaching.dao.StudentDao;
-import cn.jerryshell.liveteaching.dao.TeacherDao;
 import cn.jerryshell.liveteaching.model.Student;
 import cn.jerryshell.liveteaching.model.Teacher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.jerryshell.liveteaching.service.StudentService;
+import cn.jerryshell.liveteaching.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,19 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class RegisterController {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-    private StudentDao studentDao;
-    private TeacherDao teacherDao;
-
     @Autowired
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
+    private StudentService studentService;
     @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
+    private TeacherService teacherService;
 
     @GetMapping("/register/{kind}")
     public String toRegisterPage(@PathVariable String kind) {
@@ -35,24 +25,24 @@ public class RegisterController {
     }
 
     @PostMapping("/register/student")
-    public String doRegisterStudent(Student student) {
-        logger.info(student.toString());
-        Student studentFromDB = studentDao.findById(student.getId()).orElse(null);
+    public String doRegisterStudent(Student student, Model model) {
+        Student studentFromDB = studentService.findById(student.getId());
         if (studentFromDB != null) {
+            model.addAttribute("message", "该学号已经被注册");
             return "redirect:/register/student";
         }
-        studentDao.save(student);
+        studentService.save(student);
         return "redirect:/login";
     }
 
     @PostMapping("/register/teacher")
-    public String doRegisterTeacher(Teacher teacher) {
-        logger.info(teacher.toString());
-        Teacher teacherFromDB = teacherDao.findById(teacher.getId()).orElse(null);
+    public String doRegisterTeacher(Teacher teacher, Model model) {
+        Teacher teacherFromDB = teacherService.findById(teacher.getId());
         if (teacherFromDB != null) {
+            model.addAttribute("message", "该工号已经被注册");
             return "redirect:/register/teacher";
         }
-        teacherDao.save(teacher);
+        teacherService.save(teacher);
         return "redirect:/login";
     }
 }
