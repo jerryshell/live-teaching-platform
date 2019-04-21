@@ -27,7 +27,7 @@ public class VideoService {
     }
 
     public void uploadVideo(MultipartFile uploadFile, String filename) {
-        File file = new File("/home/jerry/Videos/" + filename);
+        File file = new File(uploadVideoConfig.getFilepath() + "/" + filename);
         try {
             uploadFile.transferTo(file);
         } catch (IOException e) {
