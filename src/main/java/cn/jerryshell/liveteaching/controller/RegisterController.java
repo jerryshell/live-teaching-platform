@@ -1,7 +1,9 @@
 package cn.jerryshell.liveteaching.controller;
 
+import cn.jerryshell.liveteaching.model.Major;
 import cn.jerryshell.liveteaching.model.Student;
 import cn.jerryshell.liveteaching.model.Teacher;
+import cn.jerryshell.liveteaching.service.MajorService;
 import cn.jerryshell.liveteaching.service.StudentService;
 import cn.jerryshell.liveteaching.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class RegisterController {
 
@@ -18,9 +22,13 @@ public class RegisterController {
     private StudentService studentService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private MajorService majorService;
 
     @GetMapping("/register/{kind}")
-    public String toRegisterPage(@PathVariable String kind) {
+    public String toRegisterPage(@PathVariable String kind, Model model) {
+        List<Major> majorList = majorService.findAll();
+        model.addAttribute("majorList", majorList);
         return "register-" + kind;
     }
 

@@ -49,10 +49,10 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="majorId">
-                                <option value="1">软件工程</option>
-                                <option value="2">计算机科学与技术</option>
-                                <option value="3">人工智能</option>
-                                <option value="4">网络安全</option>
+                                <option th:each="major:${majorList}" th:text="${major.name}"
+                                        th:value="${major.id}"
+                                        value="1">软件工程
+                                </option>
                             </select>
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">注册</button>

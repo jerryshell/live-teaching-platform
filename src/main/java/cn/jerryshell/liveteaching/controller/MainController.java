@@ -16,4 +16,9 @@ public class MainController {
         }
         return "main";
     }
+
+    @GetMapping("/teachers")
+    public String toTeachersPage() {
+        return "teachers";
+    }
 }

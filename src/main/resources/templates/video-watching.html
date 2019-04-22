@@ -13,6 +13,12 @@
 <!--导航栏-->
 
 <!--播放器-->
-<video controls="controls" th:src="${'/video/download/' + videoName}" width="1000px"></video>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <video controls="controls" th:src="${'/video/download/' + videoName}" width="1250px"></video>
+        </div>
+    </div>
+</div>
 </body>
 </html>
