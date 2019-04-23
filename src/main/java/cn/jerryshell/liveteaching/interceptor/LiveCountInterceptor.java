@@ -41,6 +41,9 @@ public class LiveCountInterceptor implements HandlerInterceptor {
                 break;
             case "teacher":
                 Teacher teacher = teacherDao.findById(loginUserId).orElse(null);
+                if (teacher == null) {
+                    break;
+                }
                 todayLiveCount = liveDao.countByTeacherId(teacher.getId());
         }
         session.setAttribute("todayLiveCount", todayLiveCount);
