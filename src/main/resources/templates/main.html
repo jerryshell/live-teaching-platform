@@ -17,20 +17,15 @@
 <div class="container banner">
     <div class="carousel slide" data-interval="2500" data-ride="carousel" id="carousel-banner">
         <ol class="carousel-indicators">
-            <li class="" data-slide-to="0" data-target="#carousel-banner"></li>
-            <li class="" data-slide-to="1" data-target="#carousel-banner"></li>
-            <li class="active" data-slide-to="2" data-target="#carousel-banner"></li>
+            <li class="" data-slide-to="0" data-target="#carousel-banner"
+                th:data-slide-to="${iterStatus.index}"
+                th:each="carousel, iterStatus:${carouselList}"></li>
         </ol>
         <div class="carousel-inner">
-            <a class="carousel-item" href="https://www.baidu.com/"
-               th:href="@{/video/9dbf184b-92df-4751-b028-6904907e5789}">
-                <img alt="" class="d-block w-100" src="img/bg1.jpg">
-            </a>
-            <a class="carousel-item" href="https://www.baidu.com/">
-                <img alt="" class="d-block w-100" src="img/bg2.jpg">
-            </a>
-            <a class="carousel-item active" href="https://www.baidu.com/">
-                <img alt="" class="d-block w-100" src="img/bg3.jpg">
+            <a class="carousel-item" href="#" th:class="${iterStatus.index}==0?'carousel-item active':'carousel-item'"
+               th:each="carousel, iterStatus:${carouselList}"
+               th:href="@{/video/}+${carousel.videoId}">
+                <img alt="" class="d-block w-100" src="img/bg1.jpg" th:src="@{/img/}+${carousel.imageName}">
             </a>
         </div>
         <a class="carousel-control-prev" data-slide="prev" href="#carousel-banner">
