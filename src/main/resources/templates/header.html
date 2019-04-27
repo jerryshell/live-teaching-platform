@@ -29,7 +29,8 @@
             <li class="nav-item">
 						<span class="userImg">
 							<a href="#" th:href="@{/user}">
-                                <img src="/img/1.jpg">
+                                <img src="/img/teacher.jpg"
+                                     th:src="@{/img/}+${session.loginUserKind=='teacher'?'teacher':'student'}+'.jpg'">
                             </a>
                             <a class="badge badge-danger badge-pill" href="#" id="message" th:href="@{/user}"
                                th:if="${session.todayLiveCount}>0" th:text="${session.todayLiveCount}">12</a>
