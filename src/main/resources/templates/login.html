@@ -29,14 +29,14 @@
                     <h4>用户登录</h4>
                     <form class="register-form" method="post" th:action="@{/login}">
                         <div class="form-group">
-                            <input class="form-control" name="id" placeholder="学号/工号" type="text"/>
+                            <input class="form-control" name="id" placeholder="学号/工号" required type="text"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="password" placeholder="密码" type="password"/>
+                            <input class="form-control" name="password" placeholder="密码" required type="password"/>
                         </div>
                         <div class="well well-sm" style="text-align:center;margin-bottom: 10px;">
-                            <input checked name="kind" type="radio" value="student"> 学生
-                            <input name="kind" type="radio" value="teacher"> 老师
+                            <input checked name="kind" required type="radio" value="student"> 学生
+                            <input name="kind" required type="radio" value="teacher"> 老师
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">登录</button>
                     </form>

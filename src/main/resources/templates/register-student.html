@@ -33,22 +33,22 @@
                     <h4>学生注册</h4>
                     <form class="register-form" method="post" th:action="@{/register/student}">
                         <div class="form-group">
-                            <input class="form-control" name="id" placeholder="学号" type="text"/>
+                            <input class="form-control" name="id" placeholder="学号" required type="text"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="nickname" placeholder="昵称" type="text"/>
+                            <input class="form-control" name="nickname" placeholder="昵称" required type="text"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="email" placeholder="电子邮箱" type="email"/>
+                            <input class="form-control" name="email" placeholder="电子邮箱" required type="email"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="password" placeholder="密码" type="password"/>
+                            <input class="form-control" name="password" placeholder="密码" required type="password"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="grade" placeholder="年级：2016" type="grade"/>
+                            <input class="form-control" name="grade" placeholder="年级：2016" required type="grade"/>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="majorId">
+                            <select class="form-control" name="majorId" required>
                                 <option th:each="major:${majorList}" th:text="${major.name}"
                                         th:value="${major.id}"
                                         value="1">软件工程

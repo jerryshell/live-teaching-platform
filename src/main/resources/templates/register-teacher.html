@@ -33,16 +33,16 @@
                     <h4>老师注册</h4>
                     <form class="register-form" method="post" th:action="@{/register/teacher}">
                         <div class="form-group">
-                            <input class="form-control" name="id" placeholder="工号" type="text"/>
+                            <input class="form-control" name="id" placeholder="工号" required type="text"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="nickname" placeholder="昵称" type="text"/>
+                            <input class="form-control" name="nickname" placeholder="昵称" required type="text"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="email" placeholder="电子邮箱" type="email"/>
+                            <input class="form-control" name="email" placeholder="电子邮箱" required type="email"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="password" placeholder="密码" type="password"/>
+                            <input class="form-control" name="password" placeholder="密码" required type="password"/>
                         </div>
                         <div class="well well-sm" style="text-align:center;margin-bottom: 10px;">
                         </div>

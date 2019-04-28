@@ -49,11 +49,11 @@
                                 <ul>
                                     <li>
                                         <span>直播名称：</span>
-                                        <input name="name" placeholder="如：Java 面向对象" type="text">
+                                        <input name="name" placeholder="如：Java 面向对象" required type="text">
                                     </li>
                                     <li>
                                         <span>所属课程：</span>
-                                        <select name="courseId">
+                                        <select name="courseId" required>
                                             <option th:each="course:${courseList}" th:text="${course.name}"
                                                     th:value="${course.id}"
                                                     value="1">Java
@@ -62,11 +62,11 @@
                                     </li>
                                     <li>
                                         <span>面向年级：</span>
-                                        <input name="grade" placeholder="如：2016" type="text">
+                                        <input name="grade" placeholder="如：2016" required type="text">
                                     </li>
                                     <li>
                                         <span>面向专业：</span>
-                                        <select name="majorId">
+                                        <select name="majorId" required>
                                             <option th:each="major:${majorList}" th:text="${major.name}"
                                                     th:value="${major.id}"
                                                     value="1">软件工程
@@ -75,15 +75,15 @@
                                     </li>
                                     <li>
                                         <span>直播日期：</span>
-                                        <input name="date" type="date">
+                                        <input name="date" required type="date">
                                     </li>
                                     <li>
                                         <span>开始时间：</span>
-                                        <input name="startTime" placeholder="如：18:00" type="text">
+                                        <input name="startTime" placeholder="如：18:00" required type="text">
                                     </li>
                                     <li>
                                         <span>直播长度：</span>
-                                        <input name="length" placeholder="如：60 分钟" type="text">
+                                        <input name="length" placeholder="如：60 分钟" required type="text">
                                     </li>
                                     <li>
                                         <input class="btn-dark" id="saveBtn" type="submit" value="创建">

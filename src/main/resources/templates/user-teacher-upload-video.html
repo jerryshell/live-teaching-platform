@@ -67,7 +67,7 @@
                                     </li>
                                     <li>
                                         <span>面向专业：</span>
-                                        <select name="majorId">
+                                        <select name="majorId" required>
                                             <option th:each="major:${majorList}" th:text="${major.name}"
                                                     th:value="${major.id}"
                                                     value="1">软件工程
