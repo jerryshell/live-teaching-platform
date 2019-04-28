@@ -6,6 +6,7 @@ import cn.jerryshell.liveteaching.service.StudentService;
 import cn.jerryshell.liveteaching.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,8 @@ public class LoginController {
             @RequestParam("id") String id,
             @RequestParam("password") String password,
             @RequestParam("kind") String kind,
-            HttpSession session
+            HttpSession session,
+            Model model
     ) {
         boolean loginResult = false;
         switch (kind) {
@@ -41,6 +43,7 @@ public class LoginController {
                 loginResult = teacherLogin(id, password, session);
         }
         if (!loginResult) {
+            model.addAttribute("message", "登录失败，用户名或密码错误");
             return "/login";
         }
         session.setAttribute("loginUserId", id);

@@ -27,6 +27,7 @@
                 </div>
                 <div class="col-md-7 register-right">
                     <h4>用户登录</h4>
+                    <h4 style="color: red; text-align: center" th:text="${message}"></h4>
                     <form class="register-form" method="post" th:action="@{/login}">
                         <div class="form-group">
                             <input class="form-control" name="id" placeholder="学号/工号" required type="text"/>

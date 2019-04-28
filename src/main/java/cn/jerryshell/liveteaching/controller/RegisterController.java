@@ -37,7 +37,7 @@ public class RegisterController {
         Student studentFromDB = studentService.findById(student.getId());
         if (studentFromDB != null) {
             model.addAttribute("message", "该学号已经被注册");
-            return "redirect:/register/student";
+            return "/register-student";
         }
         studentService.save(student);
         return "redirect:/login";
@@ -48,7 +48,7 @@ public class RegisterController {
         Teacher teacherFromDB = teacherService.findById(teacher.getId());
         if (teacherFromDB != null) {
             model.addAttribute("message", "该工号已经被注册");
-            return "redirect:/register/teacher";
+            return "/register-teacher";
         }
         teacherService.save(teacher);
         return "redirect:/login";
