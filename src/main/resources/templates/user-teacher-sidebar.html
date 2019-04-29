@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>sidebar</title>
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
+    <link href="css/zhibo.css" rel="stylesheet" th:href="@{/css/zhibo.css}">
+    <link href="css/user-left.css" rel="stylesheet" th:href="@{/css/user-left.css}">
+    <link href="css/user-right.css" rel="stylesheet" th:href="@{/css/user-right.css}">
+</head>
+<body>
+<div class="left-info" th:fragment="sidebar">
+    <div id="userIcon"><img src="/img/teacher.jpg">
+        <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='live-list'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user}">
+            直播列表
+        </a>
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='create-live'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user/create-live}">
+            创建直播
+        </a>
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='upload-video'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user/upload-video}">
+            上传回放
+        </a>
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='video-list'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user/video-list}">
+            我的视频
+        </a>
+        <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
+    </div>
+</div>
+</body>
+</html>

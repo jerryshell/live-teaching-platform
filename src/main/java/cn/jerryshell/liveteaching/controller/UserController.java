@@ -66,6 +66,7 @@ public class UserController {
         List<Live> liveList = liveService.findByTeacherId(teacherId);
         List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
         model.addAttribute("liveViewModelList", liveVMList);
+        model.addAttribute("active", "live-list");
         return "user-teacher";
     }
 
@@ -75,6 +76,7 @@ public class UserController {
         List<Major> majorList = majorDao.findAll();
         model.addAttribute("courseList", courseList);
         model.addAttribute("majorList", majorList);
+        model.addAttribute("active", "create-live");
         return "user-teacher-create-live";
     }
 
@@ -84,6 +86,7 @@ public class UserController {
         List<Major> majorList = majorDao.findAll();
         model.addAttribute("courseList", courseList);
         model.addAttribute("majorList", majorList);
+        model.addAttribute("active", "upload-video");
         return "user-teacher-upload-video";
     }
 
@@ -93,6 +96,7 @@ public class UserController {
         List<Video> videoList = videoService.findByTeacherId(loginUserId);
         List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherService, courseService);
         model.addAttribute("videoViewModelList", videoVMlList);
+        model.addAttribute("active", "video-list");
         return "user-teacher-video-list";
     }
 }

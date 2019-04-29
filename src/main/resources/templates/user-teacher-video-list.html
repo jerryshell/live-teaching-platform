@@ -18,27 +18,7 @@
 <div class="container userPage">
     <div class="row">
         <div class="col-3" id="left-info">
-            <div class="left-info">
-                <div id="userIcon"><img src="/img/teacher.jpg">
-                    <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
-                </div>
-                <div class="list-group">
-                    <a class="list-group-item-action" data-toggle="list" href="#"
-                       th:href="@{/user}">
-                        直播列表
-                    </a>
-                    <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/user/create-live}">
-                        创建直播
-                    </a>
-                    <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/user/upload-video}">
-                        上传回放
-                    </a>
-                    <a class="list-group-item-action active show" data-toggle="list" href="#"
-                       th:href="@{/user/video-list}">
-                        我的视频
-                    </a>
-                    <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
-                </div>
+            <div th:replace="user-teacher-sidebar::sidebar">
             </div>
         </div>
         <div class="col-9" id="right-info">
