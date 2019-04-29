@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>我的消息</title>
     <meta charset="UTF-8">
@@ -18,18 +18,7 @@
 <div class="container userPage">
     <div class="row">
         <div class="col-3" id="left-info">
-            <div class="left-info">
-                <div id="userIcon"><img src="/img/student.jpg">
-                    <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
-                </div>
-                <div class="list-group">
-                    <a class="list-group-item-action active show" data-toggle="list" href="#message-content">
-                        今日直播
-                        <span class="badge badge-danger badge-pill ml-4" th:if="${liveViewModelList.size()}>0"
-                              th:text="${liveViewModelList.size()}">12</span>
-                    </a>
-                    <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
-                </div>
+            <div th:replace="user-student-sidebar::sidebar">
             </div>
         </div>
         <div class="col-9" id="right-info">

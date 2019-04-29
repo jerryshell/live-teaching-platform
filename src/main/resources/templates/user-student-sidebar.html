@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Student Sidebar</title>
+</head>
+<body>
+<div class="left-info" th:fragment="sidebar">
+    <div id="userIcon"><img src="/img/student.jpg">
+        <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
+    </div>
+    <div class="list-group">
+        <a class="list-group-item-action active show" data-toggle="list" href="#message-content">
+            今日直播
+            <span class="badge badge-danger badge-pill ml-4" th:if="${liveViewModelList.size()}>0"
+                  th:text="${liveViewModelList.size()}">12</span>
+        </a>
+        <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>
+    </div>
+</div>
+</body>
+</html>
