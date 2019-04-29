@@ -32,7 +32,7 @@
         <div class="tab-pane fade col-12 active show" id="all-content">
             <meta charset="UTF-8">
             <div class="row classes container">
-                <div class="col-4" th:each="videoVM:${videoViewModelList}">
+                <div class="col-4" th:each="videoVM:${videoVMList}">
                     <div class="testimonial">
                         <h3 class="lesson-name" th:text="${videoVM.name}"></h3>
                         <!--                        直播日期：<span class="time" th:text="${videoVM.}">2019.04.03</span>-->

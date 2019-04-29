@@ -27,9 +27,16 @@ public class RegisterController {
 
     @GetMapping("/register/{kind}")
     public String toRegisterPage(@PathVariable String kind, Model model) {
-        List<Major> majorList = majorService.findAll();
-        model.addAttribute("majorList", majorList);
-        return "register-" + kind;
+        switch (kind) {
+            case "teacher":
+                return "register-teacher";
+            case "student":
+                List<Major> majorList = majorService.findAll();
+                model.addAttribute("majorList", majorList);
+                return "register-student";
+            default:
+                return "redirect:/";
+        }
     }
 
     @PostMapping("/register/student")

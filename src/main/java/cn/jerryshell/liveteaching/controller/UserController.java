@@ -55,17 +55,17 @@ public class UserController {
             return "redirect:/";
         }
         // 过滤时间和专业和年级
-        Date lastDayDate = new Date(System.currentTimeMillis() - 86400000);
-        List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
+        Date yesterday = new Date(System.currentTimeMillis() - 86400000);
+        List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(yesterday, student.getMajorId(), student.getGrade());
         List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
-        model.addAttribute("liveViewModelList", liveVMList);
+        model.addAttribute("liveVMList", liveVMList);
         return "user-student";
     }
 
     private String toTeacherUserPage(String teacherId, Model model) {
         List<Live> liveList = liveService.findByTeacherId(teacherId);
         List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
-        model.addAttribute("liveViewModelList", liveVMList);
+        model.addAttribute("liveVMList", liveVMList);
         model.addAttribute("active", "live-list");
         return "user-teacher";
     }
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/user/upload-video")
-    public String toUploadVideo(Model model) {
+    public String toUploadVideoPage(Model model) {
         List<Course> courseList = courseService.findAll();
         List<Major> majorList = majorDao.findAll();
         model.addAttribute("courseList", courseList);
@@ -95,7 +95,7 @@ public class UserController {
         String loginUserId = session.getAttribute("loginUserId").toString();
         List<Video> videoList = videoService.findByTeacherId(loginUserId);
         List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherService, courseService);
-        model.addAttribute("videoViewModelList", videoVMlList);
+        model.addAttribute("videoVMList", videoVMlList);
         model.addAttribute("active", "video-list");
         return "user-teacher-video-list";
     }

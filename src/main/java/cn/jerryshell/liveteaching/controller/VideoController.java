@@ -36,20 +36,20 @@ public class VideoController {
     private TeacherService teacherDao;
 
     @GetMapping("/video")
-    public String index(Model model) {
-        return list(model, videoService.findAll());
+    public String toVideoListPage(Model model) {
+        return toVideoListPage(model, videoService.findAll());
     }
 
     @GetMapping("/video/course/{courseId}")
-    public String indexByCourseId(@PathVariable String courseId, Model model) {
-        return list(model, videoService.findByCourseId(courseId));
+    public String toVideoListByCourseIdPage(@PathVariable String courseId, Model model) {
+        return toVideoListPage(model, videoService.findByCourseId(courseId));
     }
 
-    private String list(Model model, List<Video> videoList) {
+    private String toVideoListPage(Model model, List<Video> videoList) {
         List<Course> courseList = courseDao.findAll();
         model.addAttribute("courseList", courseList);
-        List<VideoViewModel> videoViewModelList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
-        model.addAttribute("videoViewModelList", videoViewModelList);
+        List<VideoViewModel> videoVMList = VideoViewModel.loadFromVideoList(videoList, teacherDao, courseDao);
+        model.addAttribute("videoVMList", videoVMList);
         return "video-list";
     }
 

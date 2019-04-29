@@ -30,6 +30,7 @@
                                 <img src="/img/teacher.jpg"
                                      th:src="@{/img/}+${session.loginUserKind=='teacher'?'teacher':'student'}+'.jpg'">
                             </a>
+                            <!--直播消息通知-->
                             <a class="badge badge-danger badge-pill" href="#" id="message" th:href="@{/user}"
                                th:if="${session.todayLiveCount}>0" th:text="${session.todayLiveCount}">12</a>
 						</span>

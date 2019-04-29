@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,11 +16,7 @@ public class MainController {
     private CarouselDao carouselDao;
 
     @GetMapping("/")
-    public String main(HttpSession session, Model model) {
-        Object loginUserIdObj = session.getAttribute("loginUserId");
-        if (loginUserIdObj == null) {
-            return "redirect:/login";
-        }
+    public String main(Model model) {
         List<Carousel> carouselList = carouselDao.findAll();
         model.addAttribute("carouselList", carouselList);
         return "main";

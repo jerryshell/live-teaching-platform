@@ -35,8 +35,8 @@ public class LiveController {
     @GetMapping("/live")
     public String toLiveListPage(Model model) {
         List<Live> liveList = liveService.findAll();
-        List<LiveViewModel> liveViewModelList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService);
-        model.addAttribute("liveViewModel", liveViewModelList);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService);
+        model.addAttribute("liveVMList", liveVMList);
         return "live-list";
     }
 
@@ -46,10 +46,14 @@ public class LiveController {
             @PathVariable String roomName,
             Model model
     ) {
-        model.addAttribute("ip", liveServerConfig.getIp());
-        model.addAttribute("port", liveServerConfig.getPort());
+        String ip = liveServerConfig.getIp();
+        String port = liveServerConfig.getPort();
+        String liveSource = "http://" + ip + ":" + port + "/live/" + teacherId + "/" + roomName + ".m3u8";
+        model.addAttribute("ip", ip);
+        model.addAttribute("port", port);
         model.addAttribute("teacherId", teacherId);
         model.addAttribute("roomName", roomName);
+        model.addAttribute("liveSource", liveSource);
         return "live-watching";
     }
 

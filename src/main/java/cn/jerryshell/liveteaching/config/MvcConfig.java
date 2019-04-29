@@ -13,24 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MvcConfig {
+    @Autowired
     private LiveDao liveDao;
+    @Autowired
     private StudentDao studentDao;
+    @Autowired
     private TeacherDao teacherDao;
-
-    @Autowired
-    public void setLiveDao(LiveDao liveDao) {
-        this.liveDao = liveDao;
-    }
-
-    @Autowired
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
-    @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
-    }
 
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
@@ -40,7 +28,9 @@ public class MvcConfig {
                 registry.addInterceptor(new LoginInterceptor())
                         .addPathPatterns("/**")
                         .excludePathPatterns("/", "/login", "/register/**", "/css/**", "/js/**", "/img/**");
-                registry.addInterceptor(new LiveCountInterceptor(liveDao, studentDao, teacherDao)).addPathPatterns("/**");
+                registry.addInterceptor(new LiveCountInterceptor(liveDao, studentDao, teacherDao))
+                        .addPathPatterns("/**")
+                        .excludePathPatterns("/login", "/register/**", "/css/**", "/js/**", "/img/**");
             }
         };
     }

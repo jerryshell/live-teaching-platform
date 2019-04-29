@@ -30,14 +30,17 @@ public class LiveCountInterceptor implements HandlerInterceptor {
         if (loginUserIdObj == null) {
             return true;
         }
-        Date lastDayDate = new Date(System.currentTimeMillis() - 86400000);
+        Date yesterday = new Date(System.currentTimeMillis() - 86400000);
         String loginUserId = loginUserIdObj.toString();
         String loginUserKind = session.getAttribute("loginUserKind").toString();
         Integer todayLiveCount = 0;
         switch (loginUserKind) {
             case "student":
                 Student student = studentDao.findById(loginUserId).orElse(null);
-                todayLiveCount = liveDao.countByDateAfterAndMajorIdAndGrade(lastDayDate, student.getMajorId(), student.getGrade());
+                if (student == null) {
+                    break;
+                }
+                todayLiveCount = liveDao.countByDateAfterAndMajorIdAndGrade(yesterday, student.getMajorId(), student.getGrade());
                 break;
             case "teacher":
                 Teacher teacher = teacherDao.findById(loginUserId).orElse(null);
@@ -47,8 +50,6 @@ public class LiveCountInterceptor implements HandlerInterceptor {
                 todayLiveCount = liveDao.countByTeacherId(teacher.getId());
         }
         session.setAttribute("todayLiveCount", todayLiveCount);
-        Integer liveCount = liveDao.countByDateAfter(lastDayDate);
-        session.setAttribute("liveCount", liveCount);
         return true;
     }
 }

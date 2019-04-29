@@ -22,7 +22,8 @@
                 th:each="carousel, iterStatus:${carouselList}"></li>
         </ol>
         <div class="carousel-inner">
-            <a class="carousel-item" href="#" th:class="${iterStatus.index}==0?'carousel-item active':'carousel-item'"
+            <a class="carousel-item" href="#"
+               th:class="${iterStatus.index}==0?'carousel-item active':'carousel-item'"
                th:each="carousel, iterStatus:${carouselList}"
                th:href="@{/video/}+${carousel.videoId}">
                 <img alt="" class="d-block w-100" src="img/bg1.jpg" th:src="@{/img/}+${carousel.imageName}">
@@ -79,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <a class="more" href="" th:href="@{/teachers}">查看更多</a>
+        <a class="more" href="#" th:href="@{/teachers}">查看更多</a>
     </div>
 </div>
 </body>

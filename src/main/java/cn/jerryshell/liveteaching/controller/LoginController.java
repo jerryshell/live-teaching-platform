@@ -34,13 +34,16 @@ public class LoginController {
             HttpSession session,
             Model model
     ) {
-        boolean loginResult = false;
+        boolean loginResult;
         switch (kind) {
             case "student":
                 loginResult = studentLogin(id, password, session);
                 break;
             case "teacher":
                 loginResult = teacherLogin(id, password, session);
+                break;
+            default:
+                return "redirect:/";
         }
         if (!loginResult) {
             model.addAttribute("message", "登录失败，用户名或密码错误");
