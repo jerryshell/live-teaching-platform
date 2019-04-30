@@ -26,7 +26,7 @@
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="chang-userInfo">
                         <center>
-                            <form action="" method="post" th:action="@{/live}">
+                            <form action="" enctype="multipart/form-data" method="post" th:action="@{/live}">
                                 <ul>
                                     <li>
                                         <span>直播名称：</span>
@@ -65,6 +65,10 @@
                                     <li>
                                         <span>直播长度：</span>
                                         <input name="length" placeholder="如：60 分钟" required type="text">
+                                    </li>
+                                    <li>
+                                        <span>直播资料：</span>
+                                        <input multiple name="liveMaterial" type="file">
                                     </li>
                                     <li>
                                         <input class="btn-dark" id="saveBtn" type="submit" value="创建">

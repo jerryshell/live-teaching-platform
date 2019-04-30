@@ -1,10 +1,8 @@
 package cn.jerryshell.liveteaching.vm;
 
-import cn.jerryshell.liveteaching.model.Course;
-import cn.jerryshell.liveteaching.model.Live;
-import cn.jerryshell.liveteaching.model.Major;
-import cn.jerryshell.liveteaching.model.Teacher;
+import cn.jerryshell.liveteaching.model.*;
 import cn.jerryshell.liveteaching.service.CourseService;
+import cn.jerryshell.liveteaching.service.LiveMaterialService;
 import cn.jerryshell.liveteaching.service.MajorService;
 import cn.jerryshell.liveteaching.service.TeacherService;
 
@@ -23,33 +21,40 @@ public class LiveViewModel {
     private String startTime;
     private String length;
     private String pushUrl; // 推流地址
+    private LiveMaterial liveMaterial;
 
     public static LiveViewModel loadFromLive(
             String liveServerIp,
             Live live,
             TeacherService teacherService,
             CourseService courseService,
-            MajorService majorService
+            MajorService majorService,
+            LiveMaterialService liveMaterialService
     ) {
-        LiveViewModel liveViewModel = new LiveViewModel();
-        liveViewModel.setId(live.getId());
-        liveViewModel.setName(live.getName());
-        liveViewModel.setGrade(live.getGrade());
-        liveViewModel.setDate(live.getDate());
-        liveViewModel.setStartTime(live.getStartTime());
-        liveViewModel.setLength(live.getLength());
+        LiveViewModel liveVM = new LiveViewModel();
+
+        liveVM.setId(live.getId());
+        liveVM.setName(live.getName());
+        liveVM.setGrade(live.getGrade());
+        liveVM.setDate(live.getDate());
+        liveVM.setStartTime(live.getStartTime());
+        liveVM.setLength(live.getLength());
 
         Teacher teacher = teacherService.findById(live.getTeacherId());
-        liveViewModel.setTeacher(teacher);
+        liveVM.setTeacher(teacher);
 
-        liveViewModel.setPushUrl("rtmp://" + liveServerIp + "/live/" + teacher.getId());
+        liveVM.setPushUrl("rtmp://" + liveServerIp + "/live/" + teacher.getId());
 
         Course course = courseService.findById(live.getCourseId());
-        liveViewModel.setCourse(course);
+        liveVM.setCourse(course);
 
         Major major = majorService.findById(live.getMajorId());
-        liveViewModel.setMajor(major);
-        return liveViewModel;
+        liveVM.setMajor(major);
+
+        LiveMaterial liveMaterial = liveMaterialService.findByLiveId(live.getId());
+        liveVM.setLiveMaterial(liveMaterial);
+
+        return liveVM;
     }
 
     public static List<LiveViewModel> loadFromLiveList(
@@ -57,11 +62,19 @@ public class LiveViewModel {
             List<Live> liveList,
             TeacherService teacherService,
             CourseService courseService,
-            MajorService majorService
+            MajorService majorService,
+            LiveMaterialService liveMaterialService
     ) {
         List<LiveViewModel> liveVMList = new ArrayList<>(liveList.size());
         for (Live live : liveList) {
-            LiveViewModel liveVM = LiveViewModel.loadFromLive(liveServerIp, live, teacherService, courseService, majorService);
+            LiveViewModel liveVM = LiveViewModel.loadFromLive(
+                    liveServerIp,
+                    live,
+                    teacherService,
+                    courseService,
+                    majorService,
+                    liveMaterialService
+            );
             liveVMList.add(liveVM);
         }
         return liveVMList;
@@ -80,7 +93,16 @@ public class LiveViewModel {
                 ", startTime='" + startTime + '\'' +
                 ", length='" + length + '\'' +
                 ", pushUrl='" + pushUrl + '\'' +
+                ", liveMaterial=" + liveMaterial +
                 '}';
+    }
+
+    public LiveMaterial getLiveMaterial() {
+        return liveMaterial;
+    }
+
+    public void setLiveMaterial(LiveMaterial liveMaterial) {
+        this.liveMaterial = liveMaterial;
     }
 
     public String getPushUrl() {

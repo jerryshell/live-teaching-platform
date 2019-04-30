@@ -31,6 +31,8 @@ public class UserController {
     private StudentService studentService;
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private LiveMaterialService liveMaterialService;
 
     @GetMapping("/user")
     public String toUserPage(HttpSession session, Model model) {
@@ -57,14 +59,14 @@ public class UserController {
         // 过滤时间和专业和年级
         Date yesterday = new Date(System.currentTimeMillis() - 86400000);
         List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(yesterday, student.getMajorId(), student.getGrade());
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         return "user-student";
     }
 
     private String toTeacherUserPage(String teacherId, Model model) {
         List<Live> liveList = liveService.findByTeacherId(teacherId);
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         model.addAttribute("active", "live-list");
         return "user-teacher";

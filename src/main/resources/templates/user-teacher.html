@@ -25,7 +25,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="myZhibo">
-                        <div class="infoVideo align-items-center" style="height: 530px;margin-bottom: 2%;"
+                        <div class="infoVideo align-items-center" style="height: 580px;margin-bottom: 2%;"
                              th:each="liveVM:${liveVMList}">
                             <div class="name" style="padding-top: 2%;">
                                 <strong th:text="${liveVM.name}">Div+CSS布局</strong>
@@ -55,6 +55,9 @@
                             </p>
                             <p>
                                 推流密钥：<span th:text="${liveVM.id}">7a20dc3a-b3fd-4ef1-95b5-89ad44dd6c6c</span>
+                            </p>
+                            <p th:if="${liveVM.liveMaterial}">
+                                直播资料：<a class="btn" th:href="@{/live/material/}+${liveVM.liveMaterial.id}">下载</a>
                             </p>
                             <form method="post" style="float: right; margin-right: 50px;"
                                   th:action="@{/live/}+${liveVM.id}">

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class LiveServerConfig {
     private String ip;
     private String port;
+    private String liveMaterialFilePath;
 
     public String getIp() {
         return ip;
@@ -23,5 +24,13 @@ public class LiveServerConfig {
 
     public void setPort(String port) {
         this.port = port;
+    }
+
+    public String getLiveMaterialFilePath() {
+        return liveMaterialFilePath;
+    }
+
+    public void setLiveMaterialFilePath(String liveMaterialFilePath) {
+        this.liveMaterialFilePath = liveMaterialFilePath;
     }
 }

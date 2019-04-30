@@ -2,21 +2,24 @@ package cn.jerryshell.liveteaching.controller;
 
 import cn.jerryshell.liveteaching.config.LiveServerConfig;
 import cn.jerryshell.liveteaching.model.Live;
-import cn.jerryshell.liveteaching.service.CourseService;
-import cn.jerryshell.liveteaching.service.LiveService;
-import cn.jerryshell.liveteaching.service.MajorService;
-import cn.jerryshell.liveteaching.service.TeacherService;
+import cn.jerryshell.liveteaching.model.LiveMaterial;
+import cn.jerryshell.liveteaching.service.*;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -31,11 +34,13 @@ public class LiveController {
     private CourseService courseService;
     @Autowired
     private MajorService majorService;
+    @Autowired
+    private LiveMaterialService liveMaterialService;
 
     @GetMapping("/live")
     public String toLiveListPage(Model model) {
         List<Live> liveList = liveService.findAll();
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         return "live-list";
     }
@@ -58,16 +63,50 @@ public class LiveController {
     }
 
     @PostMapping("/live")
-    public String createLive(Live live, HttpSession session) {
+    public String createLive(
+            Live live,
+            @RequestParam("liveMaterial") MultipartFile file,
+            HttpSession session
+    ) {
         live.setId(UUID.randomUUID().toString());
         live.setTeacherId(session.getAttribute("loginUserId").toString());
         liveService.save(live);
+
+        if (StringUtils.isEmpty(file.getOriginalFilename())) {
+            return "redirect:/user";
+        }
+
+        LiveMaterial liveMaterial = new LiveMaterial();
+        liveMaterial.setId(UUID.randomUUID().toString());
+        String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
+        String fileType = split[split.length - 1];
+        liveMaterial.setFileType(fileType);
+        liveMaterial.setLiveId(live.getId());
+
+        liveMaterialService.save(liveMaterial);
+        liveMaterialService.uploadFile(file, liveMaterial.getId() + "." + fileType);
         return "redirect:/user";
     }
 
     @DeleteMapping("/live/{id}")
     public String deleteLiveById(@PathVariable String id) {
         liveService.deleteById(id);
+        LiveMaterial liveMaterial = liveMaterialService.findByLiveId(id);
+        if (liveMaterial != null) {
+            liveMaterialService.deleteById(liveMaterial.getId());
+        }
         return "redirect:/user";
+    }
+
+    @GetMapping("/live/material/{materialId}")
+    public ResponseEntity<Resource> downloadLiveMaterial(@PathVariable("materialId") String materialId) throws MalformedURLException {
+        LiveMaterial liveMaterial = liveMaterialService.findById(materialId);
+        if (liveMaterial == null) {
+            return ResponseEntity.notFound().build();
+        }
+        String filename = liveMaterial.getId() + "." + liveMaterial.getFileType();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .body(new UrlResource("file://" + liveServerConfig.getLiveMaterialFilePath() + "/" + filename));
     }
 }
