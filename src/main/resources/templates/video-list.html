@@ -3,7 +3,7 @@
 <head>
     <title>课程回放</title>
     <meta charset="UTF-8">
-    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link href="css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="css/video.css" rel="stylesheet" th:href="@{/css/video.css}">
 </head>
@@ -35,7 +35,6 @@
                 <div class="col-4" th:each="videoVM:${videoVMList}">
                     <div class="testimonial">
                         <h3 class="lesson-name" th:text="${videoVM.name}"></h3>
-                        <!--                        直播日期：<span class="time" th:text="${videoVM.}">2019.04.03</span>-->
                         <div class="nav smallTeacher">
 						<span>
                             <li class="nav-teacher">
@@ -46,8 +45,7 @@
                             老师：<span class="host" th:text="${videoVM.teacher.nickname}">沈斌</span>
                         </div>
                         <div class="nav class-bottom">
-                            <!--有<span class="people-number">346</span>人正在学习...-->
-                            <span class="ml-auto lesson-category" style="width: 40%;" th:text="${videoVM.course.name}">Java</span>
+                            <span class="ml-auto lesson-category" style="width: 60%;" th:text="${videoVM.course.name}">Java</span>
                         </div>
                         <a class="btn" href="#" th:href="@{/video/}+${videoVM.id}">观看回放</a>
                     </div>
