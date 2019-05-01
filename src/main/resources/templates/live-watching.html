@@ -18,9 +18,10 @@
 <!--导航栏-->
 
 <!--播放器-->
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <video-js class="col-9" controls height="550px" id="vid1" preload="auto">
+        <div class="col-2"></div>
+        <video-js class="col-6" controls height="550px" id="vid1" preload="auto">
             <source src="https://akamai-axtest.akamaized.net/routes/lapd-v1-acceptance/www_c4/Manifest.m3u8"
                     th:src="${liveSource}"
                     type="application/x-mpegURL">
@@ -28,13 +29,18 @@
                 that <a
                         href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
         </video-js>
-        <div class="col-3" id="talks" style="padding: 0;margin-left: -1%;">
-            <iframe border="0" class="col-12" frameborder="no" id="mainFrame" onload="resizeIframe(this)"
+        <div class="col-2" id="talks" style="padding: 0;">
+            <iframe border="0" frameborder="no" id="mainFrame" onload="resizeIframe(this)"
                     src="/chat/liveId" style="height: 550px;" th:src="@{/chat/}+${liveId}"></iframe>
         </div>
+        <div class="col-2"></div>
     </div>
-    <a class="btn btn-success" href="#" th:href="@{/live/material/}+${liveMaterial.id}"
-       th:if="${liveMaterial}">下载直播资料</a>
+    <div class="row">
+        <div class="col-2"></div>
+        <a class="btn btn-success" href="#" th:href="@{/live/material/}+${liveMaterial.id}"
+           th:if="${liveMaterial}">下载直播资料</a>
+    </div>
+
 </div>
 <!--播放器-->
 <script src='/js/video.min.js' th:src="@{/js/video.min.js}"></script>
