@@ -115,6 +115,6 @@ public class LiveController {
         String filename = liveMaterial.getId() + "." + liveMaterial.getFileType();
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                .body(new UrlResource("file://" + liveServerConfig.getLiveMaterialFilePath() + "/" + filename));
+                .body(new UrlResource("file://" + liveServerConfig.getMaterialFilePath() + "/" + filename));
     }
 }

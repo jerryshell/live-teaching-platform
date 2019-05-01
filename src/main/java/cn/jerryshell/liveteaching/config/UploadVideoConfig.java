@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "upload-video")
 public class UploadVideoConfig {
     private String filepath;
+    private String materialFilePath;
 
     public String getFilepath() {
         return filepath;
@@ -14,5 +15,13 @@ public class UploadVideoConfig {
 
     public void setFilepath(String filepath) {
         this.filepath = filepath;
+    }
+
+    public String getMaterialFilePath() {
+        return materialFilePath;
+    }
+
+    public void setMaterialFilePath(String materialFilePath) {
+        this.materialFilePath = materialFilePath;
     }
 }

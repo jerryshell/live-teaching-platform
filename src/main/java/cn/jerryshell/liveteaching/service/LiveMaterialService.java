@@ -30,7 +30,7 @@ public class LiveMaterialService {
     }
 
     public void uploadFile(MultipartFile uploadFile, String filename) {
-        File file = new File(liveServerConfig.getLiveMaterialFilePath() + "/" + filename);
+        File file = new File(liveServerConfig.getMaterialFilePath() + "/" + filename);
         try {
             uploadFile.transferTo(file);
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class LiveMaterialService {
             return;
         }
         liveMaterialDao.deleteById(id);
-        String filepath = String.format("%s/%s.%s", liveServerConfig.getLiveMaterialFilePath(), liveMaterial.getId(), liveMaterial.getFileType());
+        String filepath = String.format("%s/%s.%s", liveServerConfig.getMaterialFilePath(), liveMaterial.getId(), liveMaterial.getFileType());
         File file = new File(filepath);
         file.delete();
     }
