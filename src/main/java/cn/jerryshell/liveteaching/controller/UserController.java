@@ -34,6 +34,8 @@ public class UserController {
     private LiveMaterialService liveMaterialService;
     @Autowired
     private VideoMaterialService videoMaterialService;
+    @Autowired
+    private HomeworkService homeworkService;
 
     @GetMapping("/user")
     public String toUserPage(HttpSession session, Model model) {
@@ -106,5 +108,17 @@ public class UserController {
         model.addAttribute("videoVMList", videoVMlList);
         model.addAttribute("active", "video-list");
         return "user-teacher-video-list";
+    }
+
+    @GetMapping("/user/homework")
+    public String toStudentHomeworkListPage(HttpSession session, Model model) {
+        String loginUserKind = session.getAttribute("loginUserKind").toString();
+        if (!"student".equals(loginUserKind)) {
+            return "redirect:/user";
+        }
+        String studentId = session.getAttribute("loginUserId").toString();
+        List<Homework> homeworkList = homeworkService.listByStudentId(studentId);
+        model.addAttribute("homeworkList", homeworkList);
+        return "user-student-homework-list";
     }
 }
