@@ -17,6 +17,10 @@ public class LiveService {
         return liveDao.findAll();
     }
 
+    public Live findById(String id) {
+        return liveDao.findById(id).orElse(null);
+    }
+
     public void save(Live live) {
         liveDao.save(live);
     }

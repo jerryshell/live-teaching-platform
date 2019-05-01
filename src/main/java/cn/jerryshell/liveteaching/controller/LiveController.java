@@ -45,19 +45,27 @@ public class LiveController {
         return "live-list";
     }
 
-    @GetMapping("/live/{teacherId}/{roomName}")
+    @GetMapping("/live/{teacherId}/{liveId}")
     public String toLiveWatchingPage(
             @PathVariable String teacherId,
-            @PathVariable String roomName,
+            @PathVariable String liveId,
             Model model
     ) {
+        Live live = liveService.findById(liveId);
+        if (live == null) {
+            return "redirect:/live";
+        }
+
         String ip = liveServerConfig.getIp();
         String port = liveServerConfig.getPort();
-        String liveSource = "http://" + ip + ":" + port + "/live/" + teacherId + "/" + roomName + ".m3u8";
-        model.addAttribute("ip", ip);
-        model.addAttribute("port", port);
-        model.addAttribute("teacherId", teacherId);
-        model.addAttribute("roomName", roomName);
+        String liveSource = "http://" + ip + ":" + port + "/live/" + teacherId + "/" + liveId + ".m3u8";
+
+        LiveMaterial liveMaterial = liveMaterialService.findByLiveId(liveId);
+        if (liveMaterial != null) {
+            model.addAttribute("liveMaterial", liveMaterial);
+        }
+
+        model.addAttribute("liveId", liveId);
         model.addAttribute("liveSource", liveSource);
         return "live-watching";
     }

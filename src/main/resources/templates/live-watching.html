@@ -28,11 +28,13 @@
                     th:src="${liveSource}"
                     type="application/x-mpegURL">
         </video>
-        <div class="col-3" id="talks" style="padding: 0;margin: 0;margin-left: -1%;">
-            <iframe border="0" class="col-12" frameborder="no" id="mainFrame" onload="resizeIframe(this)" scrolling="no"
-                    src="/chat/roomName" style="height: 550px;" th:src="@{/chat/}+${roomName}"></iframe>
+        <div class="col-3" id="talks" style="padding: 0;margin-left: -1%;">
+            <iframe border="0" class="col-12" frameborder="no" id="mainFrame" onload="resizeIframe(this)"
+                    src="/chat/liveId" style="height: 550px;" th:src="@{/chat/}+${liveId}"></iframe>
         </div>
     </div>
+    <a class="btn btn-success" href="#" th:href="@{/live/material/}+${liveMaterial.id}"
+       th:if="${liveMaterial}">下载直播资料</a>
 </div>
 <!--播放器-->
 <script src="/js/video.js"></script>
