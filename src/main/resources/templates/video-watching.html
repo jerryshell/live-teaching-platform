@@ -21,6 +21,15 @@
     </div>
     <div class="row">
         <a class="btn btn-success" href="#" th:href="@{/video/material/}+${videoMaterial.id}" th:if="${videoMaterial}">下载视频资料</a>
+
+    </div>
+    <div class="row" th:if="${session.loginUserKind}=='student'">
+        <form action="#" enctype="multipart/form-data" method="post" th:action="@{/homework}">
+            <h3>提交作业</h3>
+            <input multiple name="homeworkFile" required type="file"/>
+            <input hidden="hidden" name="videoId" th:value="${videoId}" type="text"/>
+            <button class="btn btn-primary" type="submit">提交</button>
+        </form>
     </div>
 </div>
 </body>

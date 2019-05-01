@@ -109,6 +109,7 @@ public class VideoController {
             return "redirect:/video";
         }
         VideoMaterial videoMaterial = videoMaterialService.findByVideoId(videoId);
+        model.addAttribute("videoId", videoId);
         model.addAttribute("videoName", video.getId() + "." + video.getFileType());
         model.addAttribute("videoMaterial", videoMaterial);
         return "video-watching";
