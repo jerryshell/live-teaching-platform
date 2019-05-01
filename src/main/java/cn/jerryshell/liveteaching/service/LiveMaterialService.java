@@ -1,6 +1,6 @@
 package cn.jerryshell.liveteaching.service;
 
-import cn.jerryshell.liveteaching.config.LiveServerConfig;
+import cn.jerryshell.liveteaching.config.LiveConfig;
 import cn.jerryshell.liveteaching.dao.LiveMaterialDao;
 import cn.jerryshell.liveteaching.model.LiveMaterial;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @Service
 public class LiveMaterialService {
     @Autowired
-    private LiveServerConfig liveServerConfig;
+    private LiveConfig liveConfig;
     @Autowired
     private LiveMaterialDao liveMaterialDao;
 
@@ -30,7 +30,7 @@ public class LiveMaterialService {
     }
 
     public void uploadFile(MultipartFile uploadFile, String filename) {
-        File file = new File(liveServerConfig.getMaterialFilePath() + "/" + filename);
+        File file = new File(liveConfig.getMaterialFilePath() + "/" + filename);
         try {
             uploadFile.transferTo(file);
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class LiveMaterialService {
             return;
         }
         liveMaterialDao.deleteById(id);
-        String filepath = String.format("%s/%s.%s", liveServerConfig.getMaterialFilePath(), liveMaterial.getId(), liveMaterial.getFileType());
+        String filepath = String.format("%s/%s.%s", liveConfig.getMaterialFilePath(), liveMaterial.getId(), liveMaterial.getFileType());
         File file = new File(filepath);
         file.delete();
     }

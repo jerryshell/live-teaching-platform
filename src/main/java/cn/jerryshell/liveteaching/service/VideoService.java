@@ -1,6 +1,6 @@
 package cn.jerryshell.liveteaching.service;
 
-import cn.jerryshell.liveteaching.config.UploadVideoConfig;
+import cn.jerryshell.liveteaching.config.VideoConfig;
 import cn.jerryshell.liveteaching.dao.VideoDao;
 import cn.jerryshell.liveteaching.model.Video;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class VideoService {
-    private UploadVideoConfig uploadVideoConfig;
+    private VideoConfig videoConfig;
     private VideoDao videoDao;
 
     @Autowired
@@ -22,12 +22,12 @@ public class VideoService {
     }
 
     @Autowired
-    public void setUploadVideoConfig(UploadVideoConfig uploadVideoConfig) {
-        this.uploadVideoConfig = uploadVideoConfig;
+    public void setVideoConfig(VideoConfig videoConfig) {
+        this.videoConfig = videoConfig;
     }
 
     public void uploadVideo(MultipartFile uploadFile, String filename) {
-        File file = new File(uploadVideoConfig.getFilepath() + "/" + filename);
+        File file = new File(videoConfig.getFilepath() + "/" + filename);
         try {
             uploadFile.transferTo(file);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class VideoService {
         if (video == null) {
             return;
         }
-        String filepath = uploadVideoConfig.getFilepath() + "/" + video.getId() + "." + video.getFileType();
+        String filepath = videoConfig.getFilepath() + "/" + video.getId() + "." + video.getFileType();
         File file = new File(filepath);
         file.delete();
         videoDao.deleteById(video.getId());

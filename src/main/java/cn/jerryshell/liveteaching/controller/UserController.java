@@ -1,6 +1,6 @@
 package cn.jerryshell.liveteaching.controller;
 
-import cn.jerryshell.liveteaching.config.LiveServerConfig;
+import cn.jerryshell.liveteaching.config.LiveConfig;
 import cn.jerryshell.liveteaching.model.*;
 import cn.jerryshell.liveteaching.service.*;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private TeacherService teacherService;
     @Autowired
-    private LiveServerConfig liveServerConfig;
+    private LiveConfig liveConfig;
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -59,14 +59,14 @@ public class UserController {
         // 过滤时间和专业和年级
         Date yesterday = new Date(System.currentTimeMillis() - 86400000);
         List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(yesterday, student.getMajorId(), student.getGrade());
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         return "user-student";
     }
 
     private String toTeacherUserPage(String teacherId, Model model) {
         List<Live> liveList = liveService.findByTeacherId(teacherId);
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         model.addAttribute("active", "live-list");
         return "user-teacher";

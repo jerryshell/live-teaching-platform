@@ -4,17 +4,26 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "upload-video")
-public class UploadVideoConfig {
-    private String filepath;
+@ConfigurationProperties(prefix = "live")
+public class LiveConfig {
+    private String ip;
+    private String port;
     private String materialFilePath;
 
-    public String getFilepath() {
-        return filepath;
+    public String getIp() {
+        return ip;
     }
 
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     public String getMaterialFilePath() {

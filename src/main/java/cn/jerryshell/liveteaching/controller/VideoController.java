@@ -1,6 +1,6 @@
 package cn.jerryshell.liveteaching.controller;
 
-import cn.jerryshell.liveteaching.config.UploadVideoConfig;
+import cn.jerryshell.liveteaching.config.VideoConfig;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Video;
 import cn.jerryshell.liveteaching.service.CourseService;
@@ -29,7 +29,7 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
     @Autowired
-    private UploadVideoConfig uploadVideoConfig;
+    private VideoConfig videoConfig;
     @Autowired
     private CourseService courseDao;
     @Autowired
@@ -98,7 +98,7 @@ public class VideoController {
     public ResponseEntity<Resource> download(@PathVariable String filename) throws MalformedURLException {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                .body(new UrlResource("file://" + uploadVideoConfig.getFilepath() + "/" + filename));
+                .body(new UrlResource("file://" + videoConfig.getFilepath() + "/" + filename));
     }
 
 }

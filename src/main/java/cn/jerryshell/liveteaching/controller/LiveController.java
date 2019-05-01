@@ -1,6 +1,6 @@
 package cn.jerryshell.liveteaching.controller;
 
-import cn.jerryshell.liveteaching.config.LiveServerConfig;
+import cn.jerryshell.liveteaching.config.LiveConfig;
 import cn.jerryshell.liveteaching.model.Live;
 import cn.jerryshell.liveteaching.model.LiveMaterial;
 import cn.jerryshell.liveteaching.service.*;
@@ -27,7 +27,7 @@ public class LiveController {
     @Autowired
     private LiveService liveService;
     @Autowired
-    private LiveServerConfig liveServerConfig;
+    private LiveConfig liveConfig;
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -40,7 +40,7 @@ public class LiveController {
     @GetMapping("/live")
     public String toLiveListPage(Model model) {
         List<Live> liveList = liveService.findAll();
-        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveServerConfig.getIp(), liveList, teacherService, courseService, majorService, liveMaterialService);
+        List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveConfig.getIp(), liveList, teacherService, courseService, majorService, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
         return "live-list";
     }
@@ -56,8 +56,8 @@ public class LiveController {
             return "redirect:/live";
         }
 
-        String ip = liveServerConfig.getIp();
-        String port = liveServerConfig.getPort();
+        String ip = liveConfig.getIp();
+        String port = liveConfig.getPort();
         String liveSource = "http://" + ip + ":" + port + "/live/" + teacherId + "/" + liveId + ".m3u8";
 
         LiveMaterial liveMaterial = liveMaterialService.findByLiveId(liveId);
@@ -115,6 +115,6 @@ public class LiveController {
         String filename = liveMaterial.getId() + "." + liveMaterial.getFileType();
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                .body(new UrlResource("file://" + liveServerConfig.getMaterialFilePath() + "/" + filename));
+                .body(new UrlResource("file://" + liveConfig.getMaterialFilePath() + "/" + filename));
     }
 }

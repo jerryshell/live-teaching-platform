@@ -1,13 +1,13 @@
 package cn.jerryshell.liveteaching;
 
-import cn.jerryshell.liveteaching.config.LiveServerConfig;
+import cn.jerryshell.liveteaching.config.LiveConfig;
 import cn.jerryshell.liveteaching.config.SecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @EnableConfigurationProperties({
-        LiveServerConfig.class,
+        LiveConfig.class,
         SecurityConfig.class
 })
 @SpringBootApplication
