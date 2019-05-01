@@ -27,7 +27,7 @@ public class MvcConfig {
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(new LoginInterceptor())
                         .addPathPatterns("/**")
-                        .excludePathPatterns("/", "/login", "/register/**", "/css/**", "/js/**", "/img/**");
+                        .excludePathPatterns("/login", "/register/**", "/css/**", "/js/**", "/img/**");
                 registry.addInterceptor(new LiveCountInterceptor(liveDao, studentDao, teacherDao))
                         .addPathPatterns("/**")
                         .excludePathPatterns("/login", "/register/**", "/css/**", "/js/**", "/img/**");
