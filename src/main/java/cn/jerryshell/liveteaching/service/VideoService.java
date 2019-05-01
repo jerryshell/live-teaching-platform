@@ -13,18 +13,10 @@ import java.util.List;
 
 @Service
 public class VideoService {
+    @Autowired
     private VideoConfig videoConfig;
+    @Autowired
     private VideoDao videoDao;
-
-    @Autowired
-    public void setVideoDao(VideoDao videoDao) {
-        this.videoDao = videoDao;
-    }
-
-    @Autowired
-    public void setVideoConfig(VideoConfig videoConfig) {
-        this.videoConfig = videoConfig;
-    }
 
     public void uploadVideo(MultipartFile uploadFile, String filename) {
         File file = new File(videoConfig.getFilepath() + "/" + filename);
@@ -40,10 +32,10 @@ public class VideoService {
         if (video == null) {
             return;
         }
-        String filepath = videoConfig.getFilepath() + "/" + video.getId() + "." + video.getFileType();
+        String filepath = videoConfig.getFilepath() + "/" + videoId + "." + video.getFileType();
         File file = new File(filepath);
         file.delete();
-        videoDao.deleteById(video.getId());
+        videoDao.deleteById(videoId);
     }
 
     public List<Video> findByTeacherId(String teacherId) {
