@@ -19,6 +19,9 @@
             <video controls="controls" th:src="${'/video/download/' + videoName}" width="100%"></video>
         </div>
     </div>
+    <div class="row">
+        <a class="btn btn-success" href="#" th:href="@{/video/material/}+${videoMaterial.id}" th:if="${videoMaterial}">下载视频资料</a>
+    </div>
 </div>
 </body>
 </html>

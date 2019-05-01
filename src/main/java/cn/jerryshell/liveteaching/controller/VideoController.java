@@ -52,7 +52,12 @@ public class VideoController {
     private String toVideoListPage(Model model, List<Video> videoList) {
         List<Course> courseList = courseService.findAll();
         model.addAttribute("courseList", courseList);
-        List<VideoViewModel> videoVMList = VideoViewModel.loadFromVideoList(videoList, teacherService, courseService);
+        List<VideoViewModel> videoVMList = VideoViewModel.loadFromVideoList(
+                videoList,
+                teacherService,
+                courseService,
+                videoMaterialService
+        );
         model.addAttribute("videoVMList", videoVMList);
         return "video-list";
     }
@@ -103,7 +108,9 @@ public class VideoController {
         if (video == null) {
             return "redirect:/video";
         }
+        VideoMaterial videoMaterial = videoMaterialService.findByVideoId(videoId);
         model.addAttribute("videoName", video.getId() + "." + video.getFileType());
+        model.addAttribute("videoMaterial", videoMaterial);
         return "video-watching";
     }
 

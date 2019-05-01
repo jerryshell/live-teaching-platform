@@ -3,8 +3,10 @@ package cn.jerryshell.liveteaching.vm;
 import cn.jerryshell.liveteaching.model.Course;
 import cn.jerryshell.liveteaching.model.Teacher;
 import cn.jerryshell.liveteaching.model.Video;
+import cn.jerryshell.liveteaching.model.VideoMaterial;
 import cn.jerryshell.liveteaching.service.CourseService;
 import cn.jerryshell.liveteaching.service.TeacherService;
+import cn.jerryshell.liveteaching.service.VideoMaterialService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,49 +18,57 @@ public class VideoViewModel {
     private String name;
     private String grade;
     private String fileType;
+    private VideoMaterial videoMaterial;
 
     public static VideoViewModel loadFromVideo(
             Video video,
             TeacherService teacherDao,
-            CourseService courseService
+            CourseService courseService,
+            VideoMaterialService videoMaterialService
     ) {
-        VideoViewModel videoViewModel = new VideoViewModel();
-        videoViewModel.setId(video.getId());
-        videoViewModel.setName(video.getName());
-        videoViewModel.setGrade(video.getGrade());
-        videoViewModel.setFileType(video.getFileType());
+        VideoViewModel videoVM = new VideoViewModel();
+        videoVM.setId(video.getId());
+        videoVM.setName(video.getName());
+        videoVM.setGrade(video.getGrade());
+        videoVM.setFileType(video.getFileType());
 
         Teacher teacher = teacherDao.findById(video.getTeacherId());
-        videoViewModel.setTeacher(teacher);
+        videoVM.setTeacher(teacher);
 
         Course course = courseService.findById(video.getCourseId());
-        videoViewModel.setCourse(course);
-        return videoViewModel;
+        videoVM.setCourse(course);
+
+        VideoMaterial videoMaterial = videoMaterialService.findByVideoId(video.getId());
+        videoVM.setVideoMaterial(videoMaterial);
+
+        return videoVM;
     }
 
     public static List<VideoViewModel> loadFromVideoList(
             List<Video> videoList,
             TeacherService teacherService,
-            CourseService courseService
+            CourseService courseService,
+            VideoMaterialService videoMaterialService
     ) {
         List<VideoViewModel> videoViewModelList = new ArrayList<>(videoList.size());
         for (Video video : videoList) {
-            VideoViewModel videoVM = VideoViewModel.loadFromVideo(video, teacherService, courseService);
+            VideoViewModel videoVM = VideoViewModel.loadFromVideo(
+                    video,
+                    teacherService,
+                    courseService,
+                    videoMaterialService
+            );
             videoViewModelList.add(videoVM);
         }
         return videoViewModelList;
     }
 
-    @Override
-    public String toString() {
-        return "VideoViewModel{" +
-                "id='" + id + '\'' +
-                ", teacher=" + teacher +
-                ", course=" + course +
-                ", name='" + name + '\'' +
-                ", grade='" + grade + '\'' +
-                ", fileType='" + fileType + '\'' +
-                '}';
+    public VideoMaterial getVideoMaterial() {
+        return videoMaterial;
+    }
+
+    public void setVideoMaterial(VideoMaterial videoMaterial) {
+        this.videoMaterial = videoMaterial;
     }
 
     public String getId() {

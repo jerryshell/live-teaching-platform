@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 public class UserController {
-
     @Autowired
     private LiveService liveService;
     @Autowired
@@ -33,6 +32,8 @@ public class UserController {
     private VideoService videoService;
     @Autowired
     private LiveMaterialService liveMaterialService;
+    @Autowired
+    private VideoMaterialService videoMaterialService;
 
     @GetMapping("/user")
     public String toUserPage(HttpSession session, Model model) {
@@ -96,7 +97,12 @@ public class UserController {
     public String toVideoListPage(HttpSession session, Model model) {
         String loginUserId = session.getAttribute("loginUserId").toString();
         List<Video> videoList = videoService.findByTeacherId(loginUserId);
-        List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(videoList, teacherService, courseService);
+        List<VideoViewModel> videoVMlList = VideoViewModel.loadFromVideoList(
+                videoList,
+                teacherService,
+                courseService,
+                videoMaterialService
+        );
         model.addAttribute("videoVMList", videoVMlList);
         model.addAttribute("active", "video-list");
         return "user-teacher-video-list";
