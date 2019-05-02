@@ -48,6 +48,8 @@
                                 <button class="btn btn-danger" type="submit">删除视频</button>
                                 <a class=" btn ml-auto " href="#"
                                    th:href="@{/video/}+${videoVM.id}">观看视频</a>
+                                <a class=" btn ml-auto " href="#"
+                                   th:href="@{/homework/listByVideoId/}+${videoVM.id}">批改作业</a>
                             </form>
                         </div>
                     </div>

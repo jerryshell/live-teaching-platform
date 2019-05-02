@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>批改作业</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<h2 style="float: right;">
+    <a class="btn btn-primary" href="#" th:href="@{/user/video-list}">< 返回视频列表</a>
+</h2>
+<table class="table table-striped" style="margin: 10px; text-align: center">
+    <thead>
+    <tr>
+        <th>作业 id</th>
+        <th>学生 id</th>
+        <th>学生昵称</th>
+        <th>视频 id</th>
+        <th>视频名称</th>
+        <th>分数</th>
+        <th>评价</th>
+        <th>下载作业</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="homeworkVM:${homeworkVMList}">
+        <td th:text="${homeworkVM.id}">作业 ID</td>
+        <td th:text="${homeworkVM.student.id}">学生 ID</td>
+        <td th:text="${homeworkVM.student.nickname}">学生昵称</td>
+        <td th:text="${homeworkVM.video.id}">视频 ID</td>
+        <td th:text="${homeworkVM.video.name}">视频名称</td>
+        <td>
+            <form action="#" method="post" th:action="@{/homework/score/}+${homeworkVM.id}">
+                <input name="score" required step="any" th:value="${homeworkVM.score}" type="number"/>
+                <button class="btn btn-success" type="submit">更新分数</button>
+            </form>
+        </td>
+        <td>
+            <form action="#" method="post" th:action="@{/homework/comment/}+${homeworkVM.id}">
+                <input name="comment" required th:value="${homeworkVM.comment}" type="text"/>
+                <button class="btn btn-success" type="submit">更新评价</button>
+            </form>
+        </td>
+        <td>
+            <a class="btn btn-primary" href="#" th:href="@{/homework/download/}+${homeworkVM.id}">下载</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

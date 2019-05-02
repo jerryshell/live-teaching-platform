@@ -44,6 +44,10 @@ public class HomeworkService {
         homeworkDao.save(homework);
     }
 
+    public void update(Homework homework) {
+        homeworkDao.save(homework);
+    }
+
     public void deleteById(String id) {
         Homework homework = homeworkDao.findById(id).orElse(null);
         if (homework == null) {
