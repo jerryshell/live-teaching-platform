@@ -3,6 +3,7 @@ package cn.jerryshell.liveteaching.controller;
 import cn.jerryshell.liveteaching.config.LiveConfig;
 import cn.jerryshell.liveteaching.model.*;
 import cn.jerryshell.liveteaching.service.*;
+import cn.jerryshell.liveteaching.vm.HomeworkViewModel;
 import cn.jerryshell.liveteaching.vm.LiveViewModel;
 import cn.jerryshell.liveteaching.vm.VideoViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class UserController {
         List<Live> liveList = liveService.findByDateAfterAndMajorIdAndGrade(yesterday, student.getMajorId(), student.getGrade());
         List<LiveViewModel> liveVMList = LiveViewModel.loadFromLiveList(liveConfig.getIp(), liveList, teacherService, courseService, majorDao, liveMaterialService);
         model.addAttribute("liveVMList", liveVMList);
+        model.addAttribute("active", "live-list");
         return "user-student";
     }
 
@@ -118,7 +120,13 @@ public class UserController {
         }
         String studentId = session.getAttribute("loginUserId").toString();
         List<Homework> homeworkList = homeworkService.listByStudentId(studentId);
-        model.addAttribute("homeworkList", homeworkList);
+        List<HomeworkViewModel> homeworkVMList = HomeworkViewModel.loadFromHomeworkList(
+                homeworkList,
+                studentService,
+                videoService
+        );
+        model.addAttribute("homeworkVMList", homeworkVMList);
+        model.addAttribute("active", "homework");
         return "user-student-homework-list";
     }
 }

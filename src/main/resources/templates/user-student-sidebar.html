@@ -10,10 +10,14 @@
         <h3 id="user-name" th:text="${session.loginUserNickname}">用戶名</h3>
     </div>
     <div class="list-group">
-        <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/user}">
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='live-list'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user}">
             今日直播
         </a>
-        <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/user/homework}">
+        <a class="list-group-item-action" data-toggle="list" href="#"
+           th:class="${active}=='homework'?'list-group-item-action active show':'list-group-item-action'"
+           th:href="@{/user/homework}">
             我的作业
         </a>
         <a class="list-group-item-action" data-toggle="list" href="#" th:href="@{/logout}">退出当前账号</a>

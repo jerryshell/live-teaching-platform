@@ -25,33 +25,23 @@
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="message-content">
                     <div class="container" id="myZhibo">
-                        <div class="infoVideo align-items-center" style="height: 410px;margin-bottom: 2%;"
-                             th:each="homework:${homeworkList}">
+                        <div class="infoVideo align-items-center" style="height: 250px;margin-bottom: 2%;"
+                             th:each="homeworkVM:${homeworkVMList}">
                             <div class="name" style="padding-top: 2%;">
-                                <strong th:text="${homework.getId()}">Div+CSS布局</strong>
+                                <strong th:text="${homeworkVM.video.name}">Div+CSS布局</strong>
                             </div>
                             <div></div>
                             <br/>
                             <p>
-                                getStudentId：<span class="class-category"
-                                                   th:text="${homework.getStudentId()}">网页制作</span>
+                                分数：<span th:text="${homeworkVM.score}">99</span>
                             </p>
                             <p>
-                                getVideoId：<span th:text="${homework.getVideoId()}">软件工程</span>
+                                老师评价：<span th:text="${homeworkVM.comment}">评价</span>
                             </p>
-                            <p>
-                                getFileType：<span th:text="${homework.getFileType()}">2016</span>
-                            </p>
-                            <p>
-                                分数：<span th:text="${homework.getScore()}">2016/6/6</span>
-                            </p>
-                            <p>
-                                老师评价：<span th:text="${homework.getComment()}">19:00-20:00</span>
-                            </p>
-                            <form action="#" method="post" th:action="@{/homework/}+${homework.getId()}">
+                            <form action="#" method="post" th:action="@{/homework/}+${homeworkVM.id}">
                                 <input hidden="hidden" name="_method" value="delete"/>
                                 <button class="btn btn-danger" type="submit">删除作业</button>
-                                <a class="btn" href="#" th:href="@{/homework/download/}+${homework.getId()}">下载作业</a>
+                                <a class="btn" href="#" th:href="@{/homework/download/}+${homeworkVM.id}">下载作业</a>
                             </form>
                         </div>
                     </div>
