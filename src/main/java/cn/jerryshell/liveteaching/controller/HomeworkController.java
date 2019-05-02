@@ -46,6 +46,12 @@ public class HomeworkController {
             return "redirect:/";
         }
 
+        // 如果重复提交作业，则删除旧的作业
+        Homework homeworkFromDB = homeworkService.findByStudentIdAndVideoId(loginUserId, videoId);
+        if (homeworkFromDB != null) {
+            homeworkService.deleteById(homeworkFromDB.getId());
+        }
+
         Homework homework = new Homework();
         homework.setId(UUID.randomUUID().toString());
         homework.setComment("正在等待老师批改...");
@@ -53,7 +59,6 @@ public class HomeworkController {
         homework.setStudentId(loginUserId);
         homework.setVideoId(videoId);
         homework.setFileType(Util.getFileTypeByFilename(filename));
-
         homeworkService.save(
                 homework,
                 homeworkFile,

@@ -20,6 +20,18 @@ public class Homework {
     @NotEmpty
     private String fileType;
 
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id='" + id + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", videoId='" + videoId + '\'' +
+                ", score=" + score +
+                ", comment='" + comment + '\'' +
+                ", fileType='" + fileType + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

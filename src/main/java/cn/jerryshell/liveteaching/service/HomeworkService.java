@@ -22,6 +22,10 @@ public class HomeworkService {
         return homeworkDao.findById(id).orElse(null);
     }
 
+    public Homework findByStudentIdAndVideoId(String studentId, String videoId) {
+        return homeworkDao.findByStudentIdAndVideoId(studentId, videoId).orElse(null);
+    }
+
     public List<Homework> listByStudentId(String studentId) {
         return homeworkDao.findByStudentId(studentId);
     }
