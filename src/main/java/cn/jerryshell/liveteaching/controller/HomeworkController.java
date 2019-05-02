@@ -37,13 +37,13 @@ public class HomeworkController {
     ) {
         String filename = homeworkFile.getOriginalFilename();
         if (StringUtils.isEmpty(filename)) {
-            return "redirect:/";
+            return "redirect:/video/" + videoId;
         }
 
         String loginUserId = session.getAttribute("loginUserId").toString();
         Student student = studentService.findById(loginUserId);
         if (student == null) {
-            return "redirect:/";
+            return "redirect:/video/" + videoId;
         }
 
         // 如果重复提交作业，则删除旧的作业
@@ -64,7 +64,7 @@ public class HomeworkController {
                 homeworkFile,
                 String.format("%s.%s", homework.getId(), homework.getFileType())
         );
-        return "redirect:/";
+        return "redirect:/video/" + videoId;
     }
 
     @GetMapping("/homework/download/{id}")
