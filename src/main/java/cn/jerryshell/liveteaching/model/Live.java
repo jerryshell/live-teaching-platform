@@ -2,7 +2,7 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -10,21 +10,21 @@ import java.util.Date;
 public class Live {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String teacherId;
-    @NotEmpty
+    @NotBlank
     private String courseId;
-    @NotEmpty
+    @NotBlank
     private String majorId;
-    @NotEmpty
+    @NotBlank
     private String name;
-    @NotEmpty
+    @NotBlank
     private String grade;
     @NotNull
     private Date date;
-    @NotEmpty
+    @NotBlank
     private String startTime;
-    @NotEmpty
+    @NotBlank
     private String length;
 
 

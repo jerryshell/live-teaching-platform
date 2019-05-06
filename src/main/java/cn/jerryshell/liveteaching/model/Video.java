@@ -2,21 +2,21 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Video {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String teacherId;
-    @NotEmpty
+    @NotBlank
     private String courseId;
-    @NotEmpty
+    @NotBlank
     private String majorId;
-    @NotEmpty
+    @NotBlank
     private String name;
-    @NotEmpty
+    @NotBlank
     private String grade;
     private String fileType;
 

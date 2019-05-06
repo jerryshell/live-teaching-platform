@@ -2,21 +2,21 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Student {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String nickname;
-    @NotEmpty
+    @NotBlank
     private String email;
-    @NotEmpty
+    @NotBlank
     private String password;
-    @NotEmpty
+    @NotBlank
     private String grade;
-    @NotEmpty
+    @NotBlank
     private String majorId;
 
     @Override

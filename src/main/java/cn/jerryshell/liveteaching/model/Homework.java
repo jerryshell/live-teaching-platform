@@ -2,22 +2,22 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Homework {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String studentId;
-    @NotEmpty
+    @NotBlank
     private String videoId;
     @NotNull
     private Double score;
-    @NotEmpty
+    @NotBlank
     private String comment;
-    @NotEmpty
+    @NotBlank
     private String fileType;
 
     @Override

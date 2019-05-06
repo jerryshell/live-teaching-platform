@@ -2,15 +2,15 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class LiveMaterial {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String liveId;
-    @NotEmpty
+    @NotBlank
     private String fileType;
 
     @Override

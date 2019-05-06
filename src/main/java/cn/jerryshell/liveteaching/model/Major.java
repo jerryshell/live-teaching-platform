@@ -2,13 +2,13 @@ package cn.jerryshell.liveteaching.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Major {
     @Id
     private String id;
-    @NotEmpty
+    @NotBlank
     private String name;
 
     @Override
