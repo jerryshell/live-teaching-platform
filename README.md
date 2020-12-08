@@ -9,6 +9,10 @@
 * 直播提醒
 * 作业上传和批改
 
+## 常见问题解答
+
+https://github.com/jerryshell/live-teaching-platform/issues?q=
+
 ## 平台界面
 
 ### 登录和注册
