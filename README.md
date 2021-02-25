@@ -13,6 +13,15 @@
 
 https://github.com/jerryshell/live-teaching-platform/issues?q=
 
+## 参考此项目需要你已经掌握以下内容
+
+* Spring Boot/Spring 依赖注入/Spring MVC
+* Spring Data JPA
+* HTML/CSS/JS
+* Thymeleaf
+* Linux 基本操作
+* Nginx 配置
+
 ## 平台界面
 
 ### 登录和注册
