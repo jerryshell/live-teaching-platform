@@ -11,7 +11,8 @@
 
 ## 常见问题解答
 
-https://github.com/jerryshell/live-teaching-platform/issues?q=
+* https://github.com/zhang564-code/live/wiki
+* https://github.com/jerryshell/live-teaching-platform/issues?q=
 
 ## 参考此项目需要你已经掌握以下内容
 
@@ -20,7 +21,7 @@ https://github.com/jerryshell/live-teaching-platform/issues?q=
 * HTML/CSS/JS
 * Thymeleaf
 * Linux 基本操作
-* Nginx 配置
+* ~Nginx 配置~（最新版的 SRS 已经解决跨域问题，不需要 Nginx 了）
 
 ## 平台界面
 
